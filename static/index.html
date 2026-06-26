@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonzai X API Explorer</title>
+  <style>
+    :root {
+      --bg: #080b12;
+      --bg-soft: #0f1520;
+      --card: #121a27;
+      --card-soft: #0d131e;
+      --line: #223042;
+      --line-soft: #1a2433;
+      --text: #d8e2f1;
+      --muted: #8ba0bf;
+      --ok: #34d399;
+      --bad: #fb7185;
+      --warn: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Space Grotesk", "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(1000px 480px at 15% -10%, #1d2f54 0%, transparent 60%),
+        radial-gradient(900px 420px at 90% -20%, #30214a 0%, transparent 65%),
+        var(--bg);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #111a2a 0%, #0d131d 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 14px 36px #0000004d;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: clamp(1.1rem, 2.6vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      line-height: 1.15;
+    }
+
+    .badge-flask {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.66rem;
+      line-height: 1;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #16a34a1e;
+      color: #86efac;
+      border: 1px solid #16a34a55;
+      vertical-align: middle;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .count-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #0b1018;
+      color: #a6b8d2;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+      background: #0b1018;
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.84rem;
+      outline: none;
+    }
+
+    .search::placeholder {
+      color: #6f84a3;
+    }
+
+    .search:focus {
+      border-color: #3d5c87;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ghost-btn {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #0b1018;
+      color: #a8bdd9;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .ghost-btn:hover {
+      background: #101828;
+    }
+
+    .category {
+      margin-top: 18px;
+    }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 2px 10px;
+    }
+
+    .cat-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: #7f96b8;
+    }
+
+    .cat-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #2a3a52, transparent);
+    }
+
+    .group {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--p, #334155);
+      background: var(--card);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .group-header {
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .group-header:hover {
+      background: #162033;
+    }
+
+    .group-head-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .group-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .group-badge {
+      font-size: 0.62rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .group-count {
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .chevron {
+      font-size: 0.72rem;
+      color: #7f93b3;
+      transition: transform 0.2s ease;
+    }
+
+    .chevron.open {
+      transform: rotate(180deg);
+    }
+
+    .group-body {
+      display: none;
+      padding: 10px;
+      border-top: 1px solid var(--line-soft);
+      background: #0d131e;
+    }
+
+    .group-body.open {
+      display: block;
+    }
+
+    .ep {
+      border: 1px solid var(--line-soft);
+      border-radius: 11px;
+      background: var(--card-soft);
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .ep.is-disabled {
+      opacity: 0.6;
+      filter: grayscale(1);
+    }
+
+    .maintenance-badge {
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #ef4444;
+      color: white;
+      font-weight: bold;
+      margin-left: 8px;
+      display: none;
+    }
+
+    .ep.is-disabled .maintenance-badge {
+      display: inline-block;
+    }
+    
+    .btn-admin-toggle {
+      border: 1px solid #eab308;
+      background: transparent;
+      color: #eab308;
+      padding: 6px 12px;
+      font-size: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    
+    .btn-admin-toggle.active {
+      background: #eab308;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .admin-controls {
+      display: none;
+      padding: 10px;
+      background: #1e1e1e;
+      border-bottom: 1px dashed #333;
+      text-align: right;
+    }
+
+    .admin-mode-active .admin-controls {
+      display: block;
+    }
+    
+    .btn-toggle-maint {
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    
+    .ep.is-disabled .btn-toggle-maint {
+      background: #22c55e;
+      color: white;
+      border-color: #16a34a;
+    }
+
+    .ep-header {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .ep-header:hover {
+      background: #121d2c;
+    }
+
+    .ep-method {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-family: monospace;
+      background: #14532d;
+      color: #86efac;
+    }
+
+    .ep-path {
+      font-family: monospace;
+      font-size: 0.74rem;
+      color: #bfd0ea;
+      word-break: break-all;
+    }
+
+    .ep-desc {
+      margin-left: auto;
+      color: #7f96b8;
+      font-size: 0.67rem;
+      font-weight: 600;
+    }
+
+    .ep-body {
+      display: none;
+      border-top: 1px solid var(--line-soft);
+      padding: 12px;
+    }
+
+    .ep-body.open {
+      display: block;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .field label {
+      font-size: 0.66rem;
+      font-family: monospace;
+      color: var(--muted);
+      text-transform: lowercase;
+    }
+
+    .field label.req {
+      color: #f9a8d4;
+    }
+
+    .field input {
+      width: 100%;
+      background: #0b1018;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 9px;
+      color: #d4e1f6;
+      font-size: 0.77rem;
+      font-family: monospace;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #4f6ea0;
+    }
+
+    .url-bar {
+      display: flex;
+      gap: 7px;
+      margin: 10px 0;
+    }
+
+    .url-bar input {
+      flex: 1;
+      min-width: 0;
+      background: #090e15;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      color: #8ba0bf;
+      font-size: 0.66rem;
+      padding: 8px 9px;
+      font-family: monospace;
+      outline: none;
+    }
+
+    .btn-copy {
+      border: 1px solid var(--line);
+      background: #101726;
+      color: #aec2e0;
+      border-radius: 8px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .btn-copy:hover {
+      background: #162238;
+    }
+
+    .btn-send {
+      width: 100%;
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-send:hover {
+      filter: brightness(1.12);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .resp {
+      margin-top: 9px;
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      overflow: hidden;
+      background: #080d14;
+    }
+
+    .resp-bar {
+      padding: 6px 9px;
+      border-bottom: 1px solid var(--line-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: #0c131f;
+    }
+
+    .resp-status {
+      font-size: 0.64rem;
+      font-weight: 800;
+      color: #7f96b8;
+    }
+
+    .resp-time {
+      font-size: 0.62rem;
+      color: #7f96b8;
+      font-family: monospace;
+      margin-left: auto;
+    }
+
+    .btn-copy-resp {
+      border: 1px solid var(--line);
+      background: #111a29;
+      color: #b8cbea;
+      border-radius: 7px;
+      font-size: 0.61rem;
+      padding: 5px 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-copy-resp:hover {
+      background: #1a2a45;
+    }
+
+    .resp-body {
+      padding: 10px;
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    .resp-body pre {
+      font-size: 0.67rem;
+      line-height: 1.42;
+      font-family: monospace;
+      color: var(--ok);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .resp-body pre.error {
+      color: var(--bad);
+    }
+
+    .resp-body pre.ok {
+      color: var(--ok);
+    }
+
+    .empty {
+      margin-top: 12px;
+      padding: 20px;
+      text-align: center;
+      color: #8ba0bf;
+      background: #0f1624;
+      border: 1px dashed #2b3b54;
+      border-radius: 12px;
+      font-size: 0.78rem;
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding: 20px 8px 8px;
+      text-align: center;
+      border-top: 1px solid #1f2d40;
+    }
+
+    .footer p {
+      color: #7f96b8;
+      font-size: 0.73rem;
+      margin-bottom: 12px;
+    }
+
+    .footer-links,
+    .top-links {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .top-links {
+      margin-top: 14px;
+      justify-content: flex-start;
+    }
+
+    .footer-links a,
+    .top-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.69rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #233248;
+      background: #0f1624;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .footer-links a:hover,
+    .top-links a:hover {
+      transform: translateY(-1px);
+    }
+
+    .footer-links .tg,
+    .top-links .tg {
+      color: #7dd3fc;
+    }
+
+    .footer-links .donate,
+    .top-links .donate {
+      color: #f9a8d4;
+    }
+
+    .footer-links .gh,
+    .top-links .gh {
+      color: #c4b5fd;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2a3a52;
+      border-radius: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .field {
+        grid-template-columns: 120px minmax(0, 1fr);
+        align-items: center;
+      }
+
+      .field label {
+        text-align: right;
+        padding-right: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>Sonzai X API Explorer <span class="badge-flask">Flask/VPS</span></h1>
+          <p class="subtitle">Simple request tester untuk semua endpoint internal.</p>
+        </div>
+        <span class="count-chip" id="countInfo">0 providers</span>
+      </div>
+      <div class="top-links">
+        <a href="https://t.me/November2kBio" target="_blank" class="tg">Telegram Channel</a>
+        <a href="https://t.me/November2k" target="_blank" class="tg">Contact Developer</a>
+        <a href="https://raw.githubusercontent.com/sonzaiekkusu/SonzaiEkkusu/refs/heads/master/QRIS.jpeg"
+          target="_blank" class="donate">Donate (QRIS)</a>
+        <a href="https://github.com/sonzaiekkusu" target="_blank" class="gh">GitHub</a>
+      </div>
+      <div class="toolbar">
+        <input id="qSearch" class="search" type="text" placeholder="Cari provider, endpoint, atau path..."
+          oninput="filterProviders(this.value)">
+        <div class="toolbar-actions">
+          <button class="ghost-btn" onclick="expandAll()">Expand All</button>
+          <button class="ghost-btn" onclick="collapseAll()">Collapse All</button>
+          <button class="btn-admin-toggle" id="btnAdmin" onclick="toggleAdminMode()">Admin: OFF</button>
+        </div>
+      </div>
+    </section>
+    <div id="app"></div>
+  </div>
+
+  <script>
+    const BASE = window.location.origin;
+
+    const PROVIDERS = [
+      {
+        id: 'melolo', name: 'Melolo Short Drama', color: '#ff6b6b', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'languages', path: '/melolo/languages', desc: 'Languages', fields: [] },
+          {
+            id: 'home', path: '/melolo/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'new', path: '/melolo/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'populer', path: '/melolo/populer', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'search', path: '/melolo/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'detail', path: '/melolo/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'id', required: true, value: '7602210251965729797' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'stream', path: '/melolo/stream', desc: 'Stream', fields: [
+              { name: 'id', label: 'Drama ID', required: true, value: '7522723499182394385' },
+              { name: 'ep', label: 'Episode', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'streamv2', path: '/melolo/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
+              { name: 'id', label: 'Drama ID', required: true, value: '7648901065357675525' },
+              { name: 'ep', label: 'Episode', type: 'number', value: '1' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'freereels', name: 'FreeReels Short Drama', color: '#f43f5e', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'languages', path: '/freereels/languages', desc: 'Languages', fields: [] },
+          {
+            id: 'home', path: '/freereels/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'new', path: '/freereels/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'populer', path: '/freereels/populer', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'search', path: '/freereels/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'detail', path: '/freereels/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'id', required: true, value: '1mJxofY52o' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'stream', path: '/freereels/stream', desc: 'Stream', fields: [
+              { name: 'dramaId', label: 'dramaId', required: true, value: '1mJxofY52o' },
+              { name: 'episode', label: 'episode', required: true, type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'flickreels', name: 'FlickReels Short Drama', color: '#06b6d4', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/flickreels/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'new', path: '/flickreels/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'populer', path: '/flickreels/populer', desc: 'Trending', fields: []
+          },
+          {
+            id: 'search', path: '/flickreels/search', desc: 'Search', fields: [
+              { name: 'q', label: 'keyword', required: true, value: 'love' }
+            ]
+          },
+          {
+            id: 'detail', path: '/flickreels/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'Playlet ID', required: true, value: '4558' }
+            ]
+          },
+          {
+            id: 'stream', path: '/flickreels/stream', desc: 'Stream', fields: [
+              { name: 'id', label: 'Playlet ID', required: true, value: '4558' },
+              { name: 'ep', label: 'Episode', type: 'number', value: '1' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'dramawave', name: 'DramaWave Short Drama', color: '#8b5cf6', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'languages', path: '/dramawave/languages', desc: 'Languages', fields: [] },
+          {
+            id: 'home', path: '/dramawave/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'new', path: '/dramawave/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'populer', path: '/dramawave/populer', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'search', path: '/dramawave/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'detail', path: '/dramawave/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'id', required: true, value: 'quv2y2O9gA' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'stream', path: '/dramawave/stream', desc: 'Stream', fields: [
+              { name: 'dramaId', label: 'dramaId', required: true, value: 'quv2y2O9gA' },
+              { name: 'episode', label: 'episode', required: true, type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'id' }
+            ]
+          },
+          {
+            id: 'streamv2', path: '/dramawave/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
+              { name: 'id', label: 'dramaId', required: true, value: 'AK4bJKSfXn' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'dramanova', name: 'DramaNova Short Drama', color: '#22d3ee', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'health', path: '/dramanova/health', desc: 'Health & Token', fields: [] },
+          { id: 'categories', path: '/dramanova/categories', desc: 'Home Modules', fields: [] },
+          {
+            id: 'home', path: '/dramanova/home', desc: 'Homepage Rails', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'discovery', path: '/dramanova/discovery', desc: 'Discovery Feed', fields: [
+              { name: 'size', label: 'size', type: 'number', value: '10' }
+            ]
+          },
+          {
+            id: 'recommend', path: '/dramanova/recommend', desc: 'Recommended', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'size', label: 'size', type: 'number', value: '10' }
+            ]
+          },
+          {
+            id: 'search', path: '/dramanova/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'size', label: 'size', type: 'number', value: '10' }
+            ]
+          },
+          {
+            id: 'detail', path: '/dramanova/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'dramaId', required: true, value: '2008473778742411264' }
+            ]
+          },
+          {
+            id: 'stream', path: '/dramanova/stream', desc: 'Stream + Resolved Play URL', fields: [
+              { name: 'id', label: 'dramaId', required: true, value: '2008473778742411264' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'play', path: '/dramanova/play', desc: 'Direct VOD Resolver', fields: [
+              { name: 'id', label: 'dramaId', value: '2008473778742411264' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' },
+              { name: 'fileId', label: 'fileId (override)', value: '' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'meloshort', name: 'MeloShort Short Drama', color: '#10b981', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/meloshort/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'new', path: '/meloshort/new', desc: 'Latest', fields: [
+              { name: 'reset', label: 'page (reset)', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'populer', path: '/meloshort/populer', desc: 'Trending', fields: []
+          },
+          {
+            id: 'search', path: '/meloshort/search', desc: 'Search', fields: [
+              { name: 'query', label: 'query', required: true, value: 'cinta' }
+            ]
+          },
+          {
+            id: 'detail', path: '/meloshort/detail', desc: 'Detail', fields: [
+              { name: 'drama_id', label: 'Drama ID', required: true, value: '69549cef4fa9fea234af6407' },
+              { name: 'chapter_id', label: 'Chapter ID (Optional)' }
+            ]
+          },
+          {
+            id: 'stream', path: '/meloshort/stream', desc: 'Stream', fields: [
+              { name: 'drama_id', label: 'Drama ID', required: true, value: '69549cef4fa9fea234af6407' },
+              { name: 'chapter_id', label: 'Chapter ID', required: true, value: '69549cf24fa9fea234af6408' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'reelshort', name: 'ReelShort Short Drama', color: '#e11d48', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/reelshort/home', desc: 'Halaman Utama', fields: [
+              { name: 'tab_id', label: 'tab_id', value: '0' },
+              { name: 'sub_tab_id', label: 'sub_tab_id', value: '0' }
+            ]
+          },
+          {
+            id: 'new', path: '/reelshort/new', desc: 'Drama Terbaru (Waterfall)', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '20' },
+              { name: 'bs_id', label: 'bs_id (opsional)', value: '' }
+            ]
+          },
+          {
+            id: 'populer', path: '/reelshort/populer', desc: 'Trending / Leaderboard', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '20' },
+              { name: 'period', label: 'periode', value: '0' },
+              { name: 'rule', label: 'aturan', value: '0' }
+            ]
+          },
+          {
+            id: 'search', path: '/reelshort/search', desc: 'Pencarian', fields: [
+              { name: 'q', label: 'kata kunci', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '10' }
+            ]
+          },
+          {
+            id: 'detail', path: '/reelshort/detail', desc: 'Detail Drama + Episodes', fields: [
+              { name: 'id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' }
+            ]
+          },
+          {
+            id: 'stream', path: '/reelshort/stream', desc: 'Streaming Episode', fields: [
+              { name: 'id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' },
+              { name: 'episode_no', label: 'episode_no', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'streamv2', path: '/reelshort/streamv2', desc: 'Streaming V2 (playable/decrypted)', fields: [
+              { name: 'id', label: 'book_id', required: true, value: '6954c5905a8236e84c01e1cd' },
+              { name: 'episode_no', label: 'episode_no', type: 'number', value: '59' }
+            ]
+          },
+          {
+            id: 'session', path: '/reelshort/session', desc: 'Info Sesi (debug)', fields: []
+          }
+        ]
+      },
+      {
+        id: 'netshort', name: 'Netshort Short Drama', color: '#f59e0b', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/netshort/home', desc: 'For You Feed', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'new', path: '/netshort/new', desc: 'Terbaru / New Releases', fields: []
+          },
+          {
+            id: 'search', path: '/netshort/search', desc: 'Search', fields: [
+              { name: 'query', label: 'query', required: true, value: 'love' },
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'populer', path: '/netshort/populer', desc: 'Trending / Ranking', fields: []
+          },
+          {
+            id: 'detail', path: '/netshort/detail', desc: 'Detail', fields: [
+              { name: 'id', label: 'shortPlayId', required: true, value: '1997949622037180417' }
+            ]
+          },
+          {
+            id: 'stream', path: '/netshort/stream', desc: 'Stream', fields: [
+              { name: 'id', label: 'shortPlayId', required: true, value: '1997949622037180417' },
+              { name: 'episode_no', label: 'episodeNo', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'streamv2', path: '/netshort/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
+              { name: 'id', label: 'shortPlayId', required: true, value: '1997949622037180417' },
+              { name: 'ep', label: 'episodeNo', type: 'number', value: '1' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'shortmax', name: 'ShortMax Short Drama', color: '#fb923c', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'home', path: '/shortmax/home', desc: 'Discover Tab Home', fields: [] },
+          {
+            id: 'new', path: '/shortmax/new', desc: 'For You Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '20' }
+            ]
+          },
+          {
+            id: 'populer', path: '/shortmax/populer', desc: 'Popular Shorts (banner-based)', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '20' },
+              { name: 'bannerId', label: 'bannerId (opsional)', value: '' }
+            ]
+          },
+          {
+            id: 'search', path: '/shortmax/search', desc: 'Keyword Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '20' }
+            ]
+          },
+          {
+            id: 'detail', path: '/shortmax/detail', desc: 'Drama Detail + Episodes', fields: [
+              { name: 'id', label: 'shortPlayId', required: true, value: '21369' },
+              { name: 'episode_limit', label: 'episode_limit', type: 'number', value: '100' }
+            ]
+          },
+          {
+            id: 'stream', path: '/shortmax/stream', desc: 'Episode Stream (m3u8)', fields: [
+              { name: 'id', label: 'shortPlayId / dreamId', required: true, value: '1365724' },
+              { name: 'episode_no', label: 'episode_no', type: 'number', value: '1' },
+              { name: 'next', label: 'nextEpisodes', type: 'number', value: '5' }
+            ]
+          },
+          {
+            id: 'streamv2', path: '/shortmax/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
+              { name: 'id', label: 'bookId', required: true, value: '13166' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' }
+            ]
+          },
+          { id: 'session', path: '/shortmax/session', desc: 'Session State (debug)', fields: [] },
+          { id: 'login', path: '/shortmax/login', desc: 'Force Tourist Login (debug)', fields: [] }
+        ]
+      },
+      {
+        id: 'dramabox', name: 'DramaBox Short Drama', color: '#a855f7', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/dramabox/home', desc: 'Homepage', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'new', path: '/dramabox/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'populer', path: '/dramabox/populer', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'rank', path: '/dramabox/rank', desc: 'Rank', fields: [
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'category', path: '/dramabox/category', desc: 'Category', fields: [
+              { name: 'category', label: 'category', value: 'cina' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'search', path: '/dramabox/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'detail', path: '/dramabox/detail', desc: 'Detail', fields: [
+              { name: 'bookId', label: 'bookId', required: true, value: '42000004908' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          },
+          {
+            id: 'stream', path: '/dramabox/stream', desc: 'Stream', fields: [
+              { name: 'bookId', label: 'bookId', required: true, value: '42000004908' },
+              { name: 'chapterIndex', label: 'chapterIndex', type: 'number', value: '0' },
+              { name: 'lang', label: 'lang', value: 'in' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'goodshort', name: 'GoodShort Short Drama', color: '#10b981', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'home', path: '/goodshort/home', desc: 'Homepage', fields: [] },
+          {
+            id: 'new', path: '/goodshort/new', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'channelId', label: 'channelId', value: '563' }
+            ]
+          },
+          {
+            id: 'populer', path: '/goodshort/populer', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          { id: 'nav', path: '/goodshort/nav', desc: 'Categories', fields: [] },
+          {
+            id: 'search', path: '/goodshort/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'SISTEM' },
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'detail', path: '/goodshort/detail', desc: 'Detail', fields: [
+              { name: 'bookId', label: 'bookId', required: true, value: '31001293031' }
+            ]
+          },
+          {
+            id: 'stream', path: '/goodshort/stream', desc: 'Stream (All Episodes)', fields: [
+              { name: 'bookId', label: 'bookId', required: true, value: '31001293031' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'drama', name: 'Drama (Drakor)', color: '#14b8a6', badge: 'MOVIE', category: 'Movie API',
+        endpoints: [
+          { id: 'homekorea', path: '/drama/home/korea', desc: 'Home Korea', fields: [] },
+          { id: 'homechina', path: '/drama/home/china', desc: 'Home China', fields: [] },
+          { id: 'terbaru', path: '/drama/terbaru', desc: 'Latest', fields: [] },
+          { id: 'trending', path: '/drama/trending', desc: 'Trending', fields: [] },
+          { id: 'ongoing', path: '/drama/ongoing', desc: 'Ongoing', fields: [] },
+          {
+            id: 'category', path: '/drama/category', desc: 'By Category', fields: [
+              { name: 'kategori', label: 'kategori', required: true, value: 'Drama China' }
+            ]
+          },
+          {
+            id: 'search', path: '/drama/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ]
+          },
+          {
+            id: 'info', path: '/drama/detail', desc: 'Detail (id atau slug)', fields: [
+              { name: 'id', label: 'id', value: '4961' },
+              { name: 'slug', label: 'slug', value: '' }
+            ]
+          },
+          {
+            id: 'stream', path: '/drama/stream', desc: 'Stream (id atau slug)', fields: [
+              { name: 'id', label: 'id', value: '4961' },
+              { name: 'slug', label: 'slug', value: '' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sosmed', name: 'Social Media Downloader', color: '#ec4899', badge: 'TOOL', category: 'Tool API',
+        endpoints: [
+          {
+            id: 'tiktok', path: '/sosmed/tiktok', desc: 'Download TikTok', fields: [
+              { name: 'url', label: 'url', required: true, value: 'https://vt.tiktok.com/ZSmbFjNGC/' }
+            ]
+          },
+          {
+            id: 'instagram', path: '/sosmed/instagram', desc: 'Download Instagram', fields: [
+              { name: 'url', label: 'url', required: true, value: 'https://www.instagram.com/reels/DUAj4SRD_IV' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'terabox', name: 'TeraBox Downloader', color: '#3b82f6', badge: 'TOOL', category: 'Tool API',
+        endpoints: [
+          {
+            id: 'scrape', path: '/terabox', desc: 'Get Download Links', fields: [
+              { name: 'url', label: 'TeraBox URL', required: true, value: 'https://1024terabox.com/s/1HcZ4bbKShOS8o69NX7MXFg' },
+              { name: 'pwd', label: 'Password', value: '' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'youtube', name: 'YouTube Downloader', color: '#ff0000', badge: 'TOOL', category: 'Tool API',
+        endpoints: [
+          {
+            id: 'info', path: '/youtube/info', desc: 'Video Metadata', fields: [
+              { name: 'url', label: 'YouTube URL', required: true, value: 'https://www.youtube.com/watch?v=N28RaEpxpdE' }
+            ]
+          },
+          {
+            id: 'download', path: '/youtube/download', desc: 'Download (mp4/mp3)', fields: [
+              { name: 'url', label: 'YouTube URL', required: true, value: 'https://www.youtube.com/watch?v=N28RaEpxpdE' },
+              { name: 'format', label: 'format', value: 'mp4' },
+              { name: 'quality', label: 'quality', value: '720' },
+              { name: 'audioBitrate', label: 'audioBitrate', value: '128' },
+              { name: 'vCodec', label: 'vCodec', value: 'h264' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'moviebox', name: 'MovieBox', color: '#22d3ee', badge: 'MOVIE', category: 'Movie API',
+        endpoints: [
+          {
+            id: 'homepage', path: '/moviebox/homepage', desc: 'Homepage Feed (banner, trending, kategori)', fields: [
+              { name: 'tabId', label: 'tabId', value: '0' }
+            ]
+          },
+          {
+            id: 'search', path: '/moviebox/search', desc: 'Search by Keyword', fields: [
+              { name: 'q', label: 'keyword', required: true, value: 'agak laen' },
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'detail', path: '/moviebox/detail', desc: 'Subject Detail', fields: [
+              { name: 'subjectId', label: 'subjectId', required: true, value: '780590657109901888' }
+            ]
+          },
+          {
+            id: 'download_movie', path: '/moviebox/download-movie', desc: 'Download Movie (.mp4 + subtitle ID)', fields: [
+              { name: 'subjectId', label: 'subjectId', required: true, value: '780590657109901888' },
+              { name: 'resolution', label: 'resolution (0/360/480/720/1080)', value: '720' }
+            ]
+          },
+          {
+            id: 'download_series', path: '/moviebox/download-series', desc: 'Download Series (per episode + subtitle ID)', fields: [
+              { name: 'subjectId', label: 'subjectId', required: true, value: '7302249604878587056' },
+              { name: 'se', label: 'season', value: '1' },
+              { name: 'resolution', label: 'resolution (0/360/480/720/1080)', value: '720' }
+            ]
+          },
+          {
+            id: 'indonesia', path: '/moviebox/indonesia', desc: 'Ranking: Indonesia', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'global', path: '/moviebox/global', desc: 'Ranking: Seluruh Dunia', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'hollywood', path: '/moviebox/hollywood', desc: 'Ranking: Hollywood', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'asia', path: '/moviebox/asia', desc: 'Ranking: Asia Lainnya', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'horror', path: '/moviebox/horror', desc: 'Ranking: Horror', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'animasi', path: '/moviebox/animasi', desc: 'Ranking: Animasi', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_kdrama', path: '/moviebox/series/kdrama', desc: 'Series: K-Drama', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_indo', path: '/moviebox/series/indo', desc: 'Series: Indo Drama', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_anime', path: '/moviebox/series/anime', desc: 'Series: Anime', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_barat', path: '/moviebox/series/barat', desc: 'Series: Barat', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_cdrama', path: '/moviebox/series/cdrama', desc: 'Series: C-Drama', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_thai', path: '/moviebox/series/thai', desc: 'Series: Thai-Drama', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          },
+          {
+            id: 'series_reality', path: '/moviebox/series/reality', desc: 'Series: Reality', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'perPage', label: 'perPage', value: '10' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'pinedrama', name: 'PineDrama Short Drama', color: '#fe2c55', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          {
+            id: 'home', path: '/pinedrama/home', desc: 'All dramas (home feed)', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '15' }
+            ]
+          },
+          {
+            id: 'trending', path: '/pinedrama/trending', desc: 'Trending dramas', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '15' }
+            ]
+          },
+          {
+            id: 'search', path: '/pinedrama/search', desc: 'Search by keyword', fields: [
+              { name: 'q', label: 'keyword', required: true, value: 'ceo' },
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '20' }
+            ]
+          },
+          {
+            id: 'category', path: '/pinedrama/category', desc: 'Dramas by category', fields: [
+              { name: 'id', label: 'category_id', required: true, value: '7628991192533029889' },
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '15' }
+            ]
+          },
+          { id: 'category_list', path: '/pinedrama/category-list', desc: 'Available categories', fields: [] },
+          {
+            id: 'detail', path: '/pinedrama/detail', desc: 'Drama detail + episodes (protobuf parsed)', fields: [
+              { name: 'id', label: 'collection_id', required: true, value: '7641577348692856084' },
+              { name: 'count', label: 'count', type: 'number', value: '10' }
+            ]
+          },
+          {
+            id: 'stream', path: '/pinedrama/stream', desc: 'Stream video URL for episode', fields: [
+              { name: 'id', label: 'collection_id', required: true, value: '7641577348692856084' },
+              { name: 'ep', label: 'episode', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'proxy', path: '/pinedrama/proxy', desc: 'Forward signed requests from app', fields: [
+              { name: 'url', label: 'TikTok API URL', required: true, value: '' }
+            ]
+          },
+          {
+            id: 'recommend', path: '/pinedrama/recommend', desc: 'Recommended dramas', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '15' },
+              { name: 'id', label: 'collection_id (optional)', value: '' }
+            ]
+          },
+          {
+            id: 'ranking', path: '/pinedrama/ranking', desc: 'Popular / ranking', fields: [
+              { name: 'page', label: 'page', value: '1' },
+              { name: 'count', label: 'count', value: '15' }
+            ]
+          },
+
+        ]
+      },
+      {
+        id: 'anime', name: 'Anime Lover V3', color: '#ef4444', badge: 'ANIME', category: 'Anime API',
+        endpoints: [
+          {
+            id: 'home', path: '/anime/home', desc: 'Latest Update', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          { id: 'ongoing', path: '/anime/ongoing', desc: 'Ongoing Anime', fields: [] },
+          { id: 'jadwal', path: '/anime/jadwal', desc: 'Jadwal Rilis', fields: [] },
+          { id: 'animelist', path: '/anime/anime-list', desc: 'Anime List', fields: [] },
+          {
+            id: 'search', path: '/anime/search', desc: 'Search', fields: [
+              { name: 'query', label: 'query', required: true, value: 'tensei' },
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'detail', path: '/anime/detail', desc: 'Detail', fields: [
+              { name: 'series', label: 'series', required: true, value: 'tensei-akujo-kuro-rekishi-sub-indo' }
+            ]
+          },
+          {
+            id: 'stream', path: '/anime/stream', desc: 'Stream', fields: [
+              { name: 'slug', label: 'slug', required: true, value: 'al-150566-1' },
+              { name: 'series', label: 'series', value: 'tensei-akujo-kuro-rekishi-sub-indo' },
+              { name: 'episode', label: 'episode', type: 'number', value: '1' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'shinigami', name: 'Shinigami Manga', color: '#6366f1', badge: 'MANGA', category: 'Manga API',
+        endpoints: [
+          {
+            id: 'home', path: '/shinigami/home', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'populer', path: '/shinigami/populer', desc: 'Popular', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' }
+            ]
+          },
+          {
+            id: 'search', path: '/shinigami/search', desc: 'Search', fields: [
+              { name: 'q', label: 'query', required: true, value: 'villain' }
+            ]
+          },
+          {
+            id: 'detail-manga', path: '/shinigami/detail/manga', desc: 'Detail Manga', pathParam: true, fields: [
+              { name: 'id', label: 'id', required: true, value: '4ee65711-ed7c-4279-bbf5-99098dfb8fec' }
+            ]
+          },
+          {
+            id: 'detail-chapter', path: '/shinigami/detail/chapter', desc: 'Detail Chapter', pathParam: true, fields: [
+              { name: 'id', label: 'id', required: true, value: 'bdba3f62-459c-47c4-b1a3-01d2eae1e94d' }
+            ]
+          },
+          {
+            id: 'list', path: '/shinigami/chapter', desc: 'Chapters', pathParam: true, fields: [
+              { name: 'id', label: 'id', required: true, value: 'aec5b7bf-63ca-4ed7-a7da-eea78f227036' }
+            ]
+          },
+          {
+            id: 'dl', path: '/shinigami/download', desc: 'Download PDF', pathParam: true, isDownload: true, fields: [
+              { name: 'id', label: 'id', required: true, value: '93f5cda7-344a-434b-b9d7-bc29caff34c2' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'utils', name: 'System Utilities', color: '#10b981', badge: 'TOOLS', category: 'Tool API',
+        endpoints: [
+          {
+            id: 'download', path: '/download', desc: 'M3U8 to MP4 Downloader', isDownload: true, fields: [
+              { name: 'url', label: 'video url', required: true, value: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' },
+              { name: 'filename', label: 'filename', value: 'episode.mp4' },
+              { name: 'subtitle', label: 'subtitle url (.srt/.vtt)', value: '' }
+            ]
+          }
+        ]
+      }
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // UI GENERATOR
+    // ═══════════════════════════════════════════════════════════════════════
+
+    function uid(p, ep) { return p.id + '_' + ep.id; }
+
+    function buildUrl(p, ep) {
+      const key = uid(p, ep);
+      const params = new URLSearchParams();
+      let path = ep.path;
+      for (const f of ep.fields) {
+        const el = document.getElementById('f_' + key + '_' + f.name);
+        const val = el ? el.value : '';
+        if (ep.pathParam && f.name === 'id' && val) { path += '/' + val; }
+        else if (val) { params.append(f.name, val); }
+      }
+      const qs = params.toString();
+      return BASE + path + (qs ? '?' + qs : '');
+    }
+
+    function refreshUrl(p, ep) {
+      const key = uid(p, ep);
+      const urlEl = document.getElementById('url_' + key);
+      const builtUrl = buildUrl(p, ep);
+      if (urlEl) urlEl.value = builtUrl;
+      if (ep.isDownload) {
+        const btn = document.getElementById('btn_' + key);
+        if (btn) btn.href = builtUrl;
+      }
+    }
+
+    function renderField(key, f) {
+      return '<div class="field"><label class="' + (f.required ? 'req' : '') + '">' + f.label + (f.required ? '*' : '') + '</label><input id="f_' + key + '_' + f.name + '" type="' + (f.type || 'text') + '" value="' + (f.value || '') + '" oninput="refreshUrl_' + key + '()"></div>';
+    }
+
+    function renderEndpoint(p, ep) {
+      const key = uid(p, ep);
+      const color = p.color;
+      const btnHtml = ep.isDownload
+        ? '<a class="btn-send" id="btn_' + key + '" style="background:' + color + '" target="_blank" href="#">Open / Download File</a>'
+        : '<button class="btn-send" id="btn_' + key + '" style="background:' + color + '" onclick="sendReq(\'' + key + '\')">Send Request</button>';
+
+      const providerId = p.id;
+      const pathToCheck = ep.displayPath || ep.path;
+      const isDisabled = window.disabledProviders && window.disabledProviders.includes(providerId);
+      const disabledClass = isDisabled ? ' is-disabled' : '';
+      const toggleText = isDisabled ? 'Enable Provider' : 'Disable Provider';
+
+      return '<div class="ep' + disabledClass + '" id="ep_wrapper_' + key + '">' +
+        '<div class="admin-controls">' +
+          '<button class="btn-toggle-maint" onclick="toggleMaintenance(\'' + providerId + '\', \'' + key + '\')">' + toggleText + '</button>' +
+        '</div>' +
+        '<div class="ep-header" onclick="toggleEp(\'' + key + '\')">' +
+          '<span class="ep-method">GET</span>' +
+          '<span class="ep-path">' + pathToCheck + '</span>' +
+          '<span class="maintenance-badge" title="Provider disabled by admin">MAINTENANCE</span>' +
+          '<span class="ep-desc">' + ep.desc + '</span>' +
+        '</div>' +
+        '<div class="ep-body" id="epb_' + key + '">' +
+          ep.fields.map(f => renderField(key, f)).join('') +
+          '<div class="url-bar"><input type="text" id="url_' + key + '" readonly><button class="btn-copy" onclick="copyUrl(\'' + key + '\')">Copy</button></div>' +
+          btnHtml +
+          '<div class="resp"><div class="resp-bar"><span class="resp-status" id="st_' + key + '">READY</span><span class="resp-time" id="tm_' + key + '"></span><button class="btn-copy-resp" id="btncopy_' + key + '" onclick="copyResp(\'' + key + '\')">Copy</button></div><div class="resp-body"><pre id="out_' + key + '">// Waiting...</pre></div></div>' +
+        '</div></div>';
+    }
+
+    function renderProvider(p) {
+      const n = p.endpoints.length;
+      return '<div class="group" style="--p:' + p.color + '"><div class="group-header" onclick="toggleGroup(\'' + p.id + '\')"><div class="group-head-left"><span class="group-title" style="color:' + p.color + '">' + p.name + '</span><span class="group-badge" style="background:' + p.color + '22;color:' + p.color + ';border:1px solid ' + p.color + '44">' + p.badge + '</span><span class="group-count">' + n + ' endpoint' + (n > 1 ? 's' : '') + '</span></div><span class="chevron" id="chev_' + p.id + '">▼</span></div><div class="group-body" id="gb_' + p.id + '">' + p.endpoints.map(ep => renderEndpoint(p, ep)).join('') + '</div></div>';
+    }
+
+    const ORDER = ['Short Drama API', 'Movie API', 'Tool API', 'Anime API', 'Manga API'];
+    let visibleProviders = [];
+
+    function renderApp(filterText = '') {
+      const q = (filterText || '').trim().toLowerCase();
+      visibleProviders = q
+        ? PROVIDERS.filter(p => {
+          const hay = (
+            p.name + ' ' + p.category + ' ' + p.badge + ' ' +
+            p.endpoints.map(ep => (ep.id + ' ' + ep.path + ' ' + (ep.displayPath || '') + ' ' + ep.desc)).join(' ')
+          ).toLowerCase();
+          return hay.includes(q);
+        })
+        : PROVIDERS.slice();
+
+      const grouped = {};
+      visibleProviders.forEach(p => {
+        const c = p.category || 'Other';
+        if (!grouped[c]) grouped[c] = [];
+        grouped[c].push(p);
+      });
+
+      let html = '';
+      ORDER.forEach(cat => {
+        if (!grouped[cat] || grouped[cat].length === 0) return;
+        html += '<div class="category"><div class="cat-header"><span class="cat-label">' + cat + '</span><span class="cat-line"></span></div>' + grouped[cat].map(renderProvider).join('') + '</div>';
+      });
+
+      if (!html) {
+        html = '<div class="empty">Tidak ada provider yang cocok dengan pencarian.</div>';
+      }
+
+      html += '<div class="footer"><p>Built by Sonzai X · Python/Flask Edition · APIs for educational purposes.</p></div>';
+      document.getElementById('app').innerHTML = html;
+      document.getElementById('countInfo').textContent = visibleProviders.length + ' providers';
+
+      visibleProviders.forEach(p => {
+        p.endpoints.forEach(ep => {
+          const key = uid(p, ep);
+          window['refreshUrl_' + key] = () => refreshUrl(p, ep);
+          refreshUrl(p, ep);
+        });
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ADMIN & MAINTENANCE LOGIC
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    window.disabledEndpoints = [];
+    window.isAdminMode = false;
+
+    async function fetchMaintenance() {
+      try {
+        const res = await fetch(BASE + '/admin/maintenance');
+        const data = await res.json();
+        if (data && data.disabled_endpoints) {
+          window.disabledEndpoints = data.disabled_endpoints;
+          renderApp(document.getElementById('qSearch').value); // Re-render to apply disabled styles
+        }
+      } catch (err) {
+        console.error("Failed to fetch maintenance status", err);
+      }
+    }
+
+    window.toggleAdminMode = async function() {
+      if (!window.isAdminMode) {
+        const pw = prompt("Enter Admin Password:");
+        try {
+          const res = await fetch(BASE + '/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pw })
+          });
+          const data = await res.json();
+          if (data.status !== "success") {
+            alert("Invalid password!");
+            return;
+          }
+        } catch (err) {
+          alert("Login failed: " + err);
+          return;
+        }
+      } else {
+        // Logout
+        try {
+          await fetch(BASE + '/admin/logout', { method: 'POST' });
+        } catch (err) {}
+      }
+
+      window.isAdminMode = !window.isAdminMode;
+      const btn = document.getElementById('btnAdmin');
+
+      if (window.isAdminMode) {
+        btn.classList.add('active');
+        btn.textContent = 'Admin: ON';
+        document.body.classList.add('admin-mode-active');
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = 'Admin: OFF';
+        document.body.classList.remove('admin-mode-active');
+      }
+      // Refresh maintenance state + re-render
+      await fetchMaintenance();
+      renderApp(document.getElementById('qSearch').value);
+    };
+
+    window.toggleMaintenance = async function(providerOrPath, key) {
+      if (!window.isAdminMode) return;
+
+      // Provider-level toggle — use provider ID (first segment of path)
+      let provider = providerOrPath;
+      if (providerOrPath.startsWith('/')) {
+        provider = providerOrPath.split('/')[1];
+      }
+
+      const currentlyDisabled = window.disabledProviders && window.disabledProviders.includes(provider);
+      const disable = !currentlyDisabled;
+
+      try {
+        const res = await fetch(BASE + '/admin/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ provider: provider, disable: disable })
+        });
+
+        const data = await res.json();
+        if (data.status === "success") {
+          window.disabledProviders = data.disabled_providers;
+          await fetchMaintenance();
+          renderApp(document.getElementById('qSearch').value);
+        } else if (data.message && data.message.includes("login")) {
+          alert("Admin session expired. Please toggle admin again.");
+        } else {
+          alert("Error: " + (data.message || data.error));
+        }
+      } catch(err) {
+        alert("Failed to toggle maintenance: " + err);
+      }
+    };
+
+    // Initialize maintenance state
+    window.addEventListener('DOMContentLoaded', fetchMaintenance);
+
+    // Update fetchMaintenance + renderEndpoint for provider-level
+    const origFetchMaintenance = fetchMaintenance;
+    fetchMaintenance = async function() {
+      try {
+        const res = await fetch(BASE + '/admin/maintenance');
+        const data = await res.json();
+        // Support both old (disabled_endpoints) and new (disabled_providers) format
+        window.disabledProviders = data.disabled_providers || data.disabled_endpoints || [];
+        window.disabledEndpoints = window.disabledProviders; // keep compat
+      } catch (err) {
+        console.error("Failed to fetch maintenance status", err);
+      }
+    };
+
+    window.filterProviders = function (text) {
+      renderApp(text);
+    };
+
+    renderApp('');
+
+    window.expandAll = function () {
+      document.querySelectorAll('.group-body').forEach(el => el.classList.add('open'));
+      document.querySelectorAll('.chevron').forEach(el => el.classList.add('open'));
+    };
+
+    window.collapseAll = function () {
+      document.querySelectorAll('.group-body').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.chevron').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.ep-body').forEach(el => el.classList.remove('open'));
+    };
+
+    PROVIDERS.forEach(p => {
+      p.endpoints.forEach(ep => {
+        const key = uid(p, ep);
+        window['refreshUrl_' + key] = () => refreshUrl(p, ep);
+      });
+    });
+
+    window.toggleGroup = function (id) {
+      document.getElementById('gb_' + id).classList.toggle('open');
+      document.getElementById('chev_' + id).classList.toggle('open');
+    };
+    window.toggleEp = function (key) { document.getElementById('epb_' + key).classList.toggle('open'); };
+    window.copyUrl = function (key) {
+      const el = document.getElementById('url_' + key);
+      navigator.clipboard.writeText(el.value);
+      const btn = el.nextElementSibling; btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1200);
+    };
+    window.copyResp = function (key) {
+      const cb = document.getElementById('out_' + key);
+      const btn = document.getElementById('btncopy_' + key);
+      if (cb && btn) { navigator.clipboard.writeText(cb.innerText); btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1200); }
+    };
+    window.sendReq = async function (key) {
+      const btn = document.getElementById('btn_' + key), out = document.getElementById('out_' + key);
+      const st = document.getElementById('st_' + key), tm = document.getElementById('tm_' + key);
+      const url = document.getElementById('url_' + key).value;
+      btn.disabled = true; btn.textContent = 'Loading...'; out.textContent = '// Sending request...'; out.className = '';
+      st.textContent = 'LOADING'; st.style.color = '#f59e0b'; tm.textContent = '';
+      const t0 = performance.now();
+      try {
+        const res = await fetch(url); const ms = Math.round(performance.now() - t0);
+        tm.textContent = ms + 'ms'; st.textContent = res.status + ' ' + res.statusText;
+        const ct = res.headers.get('content-type') || '';
+        let data;
+        if (ct.includes('json')) { try { data = await res.json(); } catch { data = { error: 'Failed to parse JSON' }; } }
+        else { const txt = await res.text(); data = { message: 'Non-JSON', preview: txt.substring(0, 500) }; }
+        out.textContent = JSON.stringify(data, null, 2);
+        if (res.ok) { st.style.color = '#34d399'; out.className = 'ok'; }
+        else { st.style.color = '#f87171'; out.className = 'error'; }
+      } catch (err) { st.textContent = 'NET ERROR'; st.style.color = '#f87171'; out.textContent = '// Error: ' + err.message; out.className = 'error'; }
+      finally { btn.disabled = false; btn.textContent = 'Send Request'; }
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+{
+  "current": {
+    "jsToken": "38BC2B15DE1A17AEEDBA39ACB979C4560A4AA23DF485C87066AEE5BE429DDB6497DFE9B739817D813B3EAC75BEF3D0F3151186065E4D0535EA527B194AAD08BF",
+    "cookie": "browserid=4uGVT5WHMOTvRy4Pf013jm_jPUZFmLK7d9t5tJwXf-FHozt2R3iulSbS8No=; lang=en; TSID=kedM5xVXpQrEIS6OV7NG7lmxNHrwuAeG; shareUpdateRandom=1; BOXCLND=rKXMCMiJafcALWLw13GbEhNNgX333Oqfj3Zmc4Ifa7U%3D; ndus=Yvi55CYteHui5qeTCRggyZD-hIkt0Bjat0jVKUdf; csrfToken=36zCJZraVd6MP4ngCfCML4OW; ndut_fmt=91616057879171053DB677C528A7C174417DF3C6C6CE5A2696636BE1BAB2B2DF; ndut_fmv=20c98a0efe5e788baf60761acfbbcda0dca2dc2a6f61aafa4120509e6e72ad8f5c72bbae2586031a67d3fd4472341cbeda567a4ed9d4d7b6742b094e27cc5e258f53567ce20c5b5c5847312ebf0d6e8239f7f6c70a4644c93110c0342258503247fc6405f4a17b4a06eb9b3193600eef; g_state={\"i_l\":0,\"i_ll\":1781252961299,\"i_b\":\"562qv1DlC12MoJzyfAtbEVwEJfBzSzRqUC0+acHGBBQ\",\"i_e\":{\"enable_itp_optimization\":0},\"i_et\":1781252722678}",
+    "originBase": "https://dm.1024tera.com",
+    "siteReferer": "https://www.1024tera.com/",
+    "preferredListUrl": "https://dm.1024tera.com/share/list",
+    "preferredVerifyUrl": "https://dm.1024tera.com/share/verify",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "Connection": "keep-alive",
+      "Accept": "application/json, text/plain, */*",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "X-Requested-With": "XMLHttpRequest",
+      "sec-ch-ua": "\"Brave\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "sec-ch-ua-mobile": "?0",
+      "Sec-GPC": "1",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Sec-Fetch-Site": "same-origin",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Dest": "empty",
+      "Cookie": "browserid=4uGVT5WHMOTvRy4Pf013jm_jPUZFmLK7d9t5tJwXf-FHozt2R3iulSbS8No=; lang=en; TSID=kedM5xVXpQrEIS6OV7NG7lmxNHrwuAeG; shareUpdateRandom=1; BOXCLND=rKXMCMiJafcALWLw13GbEhNNgX333Oqfj3Zmc4Ifa7U%3D; ndus=Yvi55CYteHui5qeTCRggyZD-hIkt0Bjat0jVKUdf; csrfToken=36zCJZraVd6MP4ngCfCML4OW; ndut_fmt=91616057879171053DB677C528A7C174417DF3C6C6CE5A2696636BE1BAB2B2DF; ndut_fmv=20c98a0efe5e788baf60761acfbbcda0dca2dc2a6f61aafa4120509e6e72ad8f5c72bbae2586031a67d3fd4472341cbeda567a4ed9d4d7b6742b094e27cc5e258f53567ce20c5b5c5847312ebf0d6e8239f7f6c70a4644c93110c0342258503247fc6405f4a17b4a06eb9b3193600eef; g_state={\"i_l\":0,\"i_ll\":1781252961299,\"i_b\":\"562qv1DlC12MoJzyfAtbEVwEJfBzSzRqUC0+acHGBBQ\",\"i_e\":{\"enable_itp_optimization\":0},\"i_et\":1781252722678}"
+    },
+    "listEndpoints": [
+      "https://dm.1024tera.com/share/list",
+      "https://dm.terabox.app/share/list",
+      "https://www.terabox.app/share/list",
+      "https://www.1024tera.com/share/list",
+      "https://terabox.com/share/list",
+      "https://freeterabox.com/share/list",
+      "https://teraboxapp.com/share/list"
+    ],
+    "verifyEndpoints": [
+      "https://dm.1024tera.com/share/verify",
+      "https://dm.terabox.app/share/verify",
+      "https://www.terabox.app/share/verify",
+      "https://www.1024tera.com/share/verify"
+    ],
+    "source": "SCRAPED_NEW"
+  }
+}

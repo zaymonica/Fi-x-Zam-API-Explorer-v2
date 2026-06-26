@@ -1,0 +1,11 @@
+Flask
+Flask-CORS
+requests
+gunicorn
+cryptography
+python-dotenv
+reportlab
+Pillow
+pycryptodome
+beautifulsoup4
+lxml
