@@ -12,22 +12,36 @@ project-api/
 ├── requirements.txt    # Dependencies Python
 ├── .env.example        # Template environment variables
 ├── Procfile            # Untuk deployment (gunicorn)
+├── database/           # Folder untuk menyimpan state/session (JSON)
+├── worker/             # Background workers/jobs
 ├── static/
 │   └── index.html      # Frontend API Explorer  
 └── routes/
     ├── __init__.py
-    ├── auth.py          # API Key Management (Upstash Redis)
+    ├── admin.py         # Admin/Dashboard Routes
+    ├── auth.py          # API Key Management
     ├── cors_proxy.py    # CORS Proxy
+    ├── downloader.py    # General Downloader
     ├── sosmed.py        # Social Media Downloader (TikTok, IG, FB)
     ├── terabox.py       # TeraBox Downloader
     ├── shinigami.py     # Shinigami Manga + PDF Generator
-    ├── melolo.py        # Melolo Short Drama
-    ├── dramabox.py      # DramaBox Short Drama (RSA signing)
-    ├── dramawave.py     # DramaWave Short Drama
-    ├── drama.py         # Drama Drakor
-    ├── goodshort.py     # GoodShort Short Drama (RSA signing)
     ├── anime.py         # Anime Lover V3
-    └── supabase_proxy.py # Proxy: ReelShort, FreeReels, NetShort, MeloShort, FlickReels, YouTube
+    ├── drama.py         # Drama Drakor
+    ├── moviebox.py      # MovieBox
+    ├── youtube.py       # YouTube Proxy/Downloader
+    # === Short Drama Sources ===
+    ├── dramabox.py      # DramaBox Short Drama (RSA signing)
+    ├── dramanova.py     # DramaNova
+    ├── dramawave.py     # DramaWave Short Drama
+    ├── flickreels.py    # FlickReels
+    ├── freereels.py     # FreeReels
+    ├── goodshort.py     # GoodShort Short Drama (RSA signing)
+    ├── melolo.py        # Melolo Short Drama
+    ├── meloshort.py     # MeloShort
+    ├── netshort.py      # NetShort
+    ├── pinedrama.py     # PineDrama
+    ├── reelshort.py     # ReelShort
+    └── shortmax.py      # ShortMax
 ```
 
 ## 🚀 Cara Deploy di VPS
