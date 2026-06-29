@@ -9,7 +9,7 @@ from utils import json_response
 
 dramabox_bp = Blueprint('dramabox', __name__)
 
-SUPABASE_BASE = "https://snyvkmitfyayceevxfje.supabase.co/functions/v1/dramabox"
+SUPABASE_BASE = "https://ovxlfhukkravtmoamjul.supabase.co/functions/v1/dramabox"
 
 SUPABASE_HEADERS = {
     "User-Agent": "SonzaiX-API/1.0",
