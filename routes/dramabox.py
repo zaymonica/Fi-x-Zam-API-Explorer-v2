@@ -226,7 +226,12 @@ def dramabox_stream():
         or (chapters[0] if chapters else {})
 
     qualities = []
-    for cdn in chapter.get("cdnList") or []:
+    cdn_list = chapter.get("cdnList") or []
+    
+    # Prioritaskan CDN hwztakavideo
+    cdn_list_sorted = sorted(cdn_list, key=lambda c: c.get("cdnDomain") != "hwztakavideo.dramaboxdb.com")
+    
+    for cdn in cdn_list_sorted:
         cdn_default = cdn.get("isDefault", 0)
         for vp in cdn.get("videoPathList") or []:
             url = vp.get("videoPath")
@@ -238,7 +243,7 @@ def dramabox_stream():
                 "isDefault": vp.get("isDefault") or cdn_default or 0,
             })
         if qualities:
-            break  # first (usually default) cdn is enough
+            break  # first (prioritized) cdn is enough
 
     video_url = ""
     if qualities:
