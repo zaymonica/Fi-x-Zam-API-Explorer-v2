@@ -11,6 +11,7 @@ import time
 import requests
 from flask import Blueprint, request
 from utils import error_response, json_response
+from config import API_AUTHOR, API_CONTACT
 
 flickreels_bp = Blueprint('flickreels', __name__, url_prefix='/flickreels')
 
@@ -166,8 +167,8 @@ def _to_book(cleaned):
 
 def _books_resp(type_, dramas, extra=None):
     payload = {
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact": API_CONTACT,
         "type": type_,
         "data": [{"books": [_to_book(d) for d in dramas]}],
     }

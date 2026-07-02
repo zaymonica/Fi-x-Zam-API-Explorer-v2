@@ -52,6 +52,7 @@ from Crypto.Cipher import AES, PKCS1_v1_5
 from Crypto.PublicKey import RSA
 from Crypto.Util.Padding import pad
 from utils import json_response
+from config import API_AUTHOR, API_CONTACT
 
 dramanova_bp = Blueprint('dramanova', __name__, url_prefix='/dramanova')
 log = logging.getLogger("dramanova")
@@ -399,8 +400,8 @@ def _dn_books_resp(raw_body):
     raw = raw_body.get("data") if isinstance(raw_body, dict) else raw_body
     books = [_dn_book(b) for b in _dn_collect(raw)]
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact": API_CONTACT,
         "data": [{"books": books}],
     })
 

@@ -6,6 +6,7 @@ import requests as http_requests
 from flask import Blueprint, request
 
 from utils import json_response
+from config import API_AUTHOR, API_CONTACT
 
 dramabox_bp = Blueprint('dramabox', __name__)
 
@@ -15,7 +16,6 @@ SUPABASE_HEADERS = {
     "User-Agent": "SonzaiX-API/1.0",
     "Accept": "application/json",
 }
-
 
 def _proxy(path: str = "", params: dict = None):
     """Forward request ke Supabase Edge Function."""
@@ -96,8 +96,8 @@ def _proxy_list(params):
     raw = body.get("data") if isinstance(body, dict) else body
     books = [_norm_book(b) for b in _collect_books(raw)]
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact": API_CONTACT,
         "data": [{"books": books}],
     })
 
@@ -190,8 +190,8 @@ def dramabox_detail(book_id_path=None):
     merged.update({k: v for k, v in raw.items() if k not in merged})
 
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact": API_CONTACT,
         "data": merged,
     })
 
@@ -251,8 +251,8 @@ def dramabox_stream():
         video_url = (default or qualities[0])["videoPath"]
 
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR, 
+        "contact": API_CONTACT,
         "data": {
             "bookId": book_id,
             "chapterIndex": idx,
