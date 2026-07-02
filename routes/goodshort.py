@@ -203,8 +203,8 @@ def _gs_list_resp(raw_body):
     # some goodshort endpoints already put the payload at top level
     books = [_gs_norm_book(b) for b in _gs_collect(raw if raw is not None else raw_body)]
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact": API_CONTACT,
         "data": [{"books": books}],
     })
 

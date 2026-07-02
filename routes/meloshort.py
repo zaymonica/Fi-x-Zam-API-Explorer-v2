@@ -12,11 +12,9 @@ import threading
 import requests
 from flask import Blueprint, request
 from utils import json_response, error_response
+from config import API_AUTHOR, API_CONTACT
 
 meloshort_bp = Blueprint('meloshort', __name__, url_prefix='/meloshort')
-
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
 
 MELOSHORT_BASE = "https://api.meloshort.com"
 DEVICE_UUID = "8524214c-77d2-34e6-be25-252de91c9096"

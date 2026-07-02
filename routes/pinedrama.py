@@ -49,11 +49,9 @@ import urllib.parse
 import requests as http_requests
 from flask import Blueprint, request, Response
 from utils import json_response, error_response
+from config import API_AUTHOR, API_CONTACT
 
 pinedrama_bp = Blueprint('pinedrama', __name__, url_prefix='/pinedrama')
-
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
 
 # ── TikTok API Endpoints ────────────────────────────────────────────
 TIKTOK_API_BASE = "https://api16-normal-c-alisg.tiktokv.com"
