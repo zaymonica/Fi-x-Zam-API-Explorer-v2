@@ -22,11 +22,9 @@ from utils import json_response, error_response
 from Crypto.Cipher import AES, PKCS1_v1_5
 from Crypto.PublicKey import RSA
 from Crypto.Util.Padding import pad, unpad
+from config import API_AUTHOR, API_CONTACT
 
 netshort_bp = Blueprint('netshort', __name__, url_prefix='/netshort')
-
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
 
 NETSHORT_BASE = "https://appsecapi.netshort.com/prod-app-api"
 

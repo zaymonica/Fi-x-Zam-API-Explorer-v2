@@ -4,11 +4,11 @@ import hashlib
 import secrets
 from flask import Blueprint, request, session
 from utils import json_response, error_response
+from config import ADMIN_PASSWORD_HASH
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 MAINTENANCE_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'maintenance.json')
-ADMIN_PASSWORD_HASH = "5c6058f3aa0a004c491c3aa890eafcb5"  # md5("admeme404")
 
 # ── Auth helpers ─────────────────────────────────────────────────────
 def _check_auth():

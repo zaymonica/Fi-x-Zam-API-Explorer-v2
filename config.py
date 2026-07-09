@@ -21,6 +21,10 @@ CORS_HEADERS = {
 # ── API Branding ────────────────────────────────────────────────────
 API_AUTHOR  = os.getenv('API_AUTHOR', 'Sonzai X シ')
 API_CONTACT = os.getenv('API_CONTACT', 'https://t.me/November2k')
+ADMIN_PASSWORD_HASH = "5c6058f3aa0a004c491c3aa890eafcb5"  # md5("admeme404")
+
+# ── Worker Proxy ────────────────────────────────────────────────────
+WORKER_PROXY = "https://proxy.sonzaixlab.workers.dev"
 
 # ── Cookies (Social Media Downloader) ───────────────────────────────
 IG_COOKIE = os.getenv('IG_COOKIE', "ig_did=1CE8B205-24AA-491A-9A66-042601D27B30; csrftoken=hIdJUCeyizQwpPfuroip_5; datr=PNF6aSzhX2jWIVO8C2YBnz32; wd=1280x881; mid=aXrRPAALAAG2fayiMjkqm_kSJvSJ; ds_user_id=7182507078; sessionid=7182507078%3AJbaY3ndx7sk4AG%3A4%3AAYjfywjnGlSP_bruaENTCeRo9YlgIQmBKeo0J6vERQ; rur=\"CCO\\0547182507078\\0541801193599:01fed4fedf6bf98d5a6e95e8ce6e989669726a747b4d5eb83fb4e31c08c81e9e4759ec42\"")

@@ -15,14 +15,12 @@ from urllib.parse import urlparse, parse_qs, urlencode
 import requests
 from flask import Blueprint, request
 from utils import json_response, error_response
+from config import API_AUTHOR, API_CONTACT, WORKER_PROXY
 
 terabox_bp = Blueprint('terabox', __name__, url_prefix='/terabox')
 
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
-
-CORS_DOWNLOAD_BASE = "https://proxy.sonzaixlab.workers.dev/dl"
-CORS_API_BASE = "https://proxy.sonzaixlab.workers.dev/tb"
+CORS_DOWNLOAD_BASE = f"{WORKER_PROXY}/dl"
+CORS_API_BASE = f"{WORKER_PROXY}/tb"
 
 TERABOX_DOWNLOAD_TOKEN_TTL_SECONDS = 60 * 60
 TERABOX_DOWNLOAD_LINK_BATCH_SIZE = 5

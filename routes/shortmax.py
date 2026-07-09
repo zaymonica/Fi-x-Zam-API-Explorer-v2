@@ -45,11 +45,9 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 
 from utils import json_response, error_response
+from config import API_AUTHOR, API_CONTACT
 
 shortmax_bp = Blueprint('shortmax', __name__, url_prefix='/shortmax')
-
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
 
 # ─── Constants (from APK) ─────────────────────────────────────────────
 SHORTMAX_BASE = "https://api.shorttv.live"

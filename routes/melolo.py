@@ -6,6 +6,7 @@ import requests
 from Crypto.Cipher import AES
 from flask import Blueprint, request, Response
 from utils import error_response, json_response, normalize_melolo_tags
+from config import WORKER_PROXY
 
 melolo_bp = Blueprint('melolo', __name__, url_prefix='/melolo')
 
@@ -626,7 +627,7 @@ def cdn_proxy(video_path):
 # was recovered from dramakuy's frontend bundle.
 DRAMAKUY_BASE = "https://dramakuy.com"
 DRAMAKUY_PASSPHRASE = "DracinBox-SecureKey2026"
-MELOLO_WORKER_PROXY = "https://proxy.sonzaixlab.workers.dev/stream"
+MELOLO_WORKER_PROXY = f"{WORKER_PROXY}/stream"
 
 
 def _cryptojs_decrypt(b64_blob, passphrase):

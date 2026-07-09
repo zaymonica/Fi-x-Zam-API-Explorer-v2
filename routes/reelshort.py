@@ -40,11 +40,9 @@ from Crypto.Util.Padding import unpad
 from flask import Blueprint, request
 
 from utils import json_response, error_response
+from config import API_AUTHOR, API_CONTACT
 
 reelshort_bp = Blueprint('reelshort', __name__, url_prefix='/reelshort')
-
-API_AUTHOR = "Sonzai X シ"
-API_CONTACT = "https://t.me/November2k"
 
 # ─── Constants ────────────────────────────────────────────────────────
 BASE_URL = "https://v-api.crazymaplestudios.com"

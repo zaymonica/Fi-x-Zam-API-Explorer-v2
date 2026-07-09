@@ -27,6 +27,7 @@ from utils import json_response
 import concurrent.futures
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
+from config import API_AUTHOR, API_CONTACT
 
 dramawave_bp = Blueprint('dramawave', __name__, url_prefix='/dramawave')
 
@@ -195,8 +196,8 @@ def _dw_list_resp(raw_body):
     raw = raw_body.get("data") if isinstance(raw_body, dict) else raw_body
     books = [_dw_norm_series(s) for s in _dw_collect(raw)]
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact":API_CONTACT,
         "data": [{"books": books}],
     })
 
@@ -244,8 +245,8 @@ def search_drama():
         })
 
     return json_response({
-        "author": "Sonzai X シ",
-        "contact": "https://t.me/November2k",
+        "author": API_AUTHOR,
+        "contact":API_CONTACT,
         "data": [{"books": books}],
     })
 
