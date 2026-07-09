@@ -1148,32 +1148,65 @@
       {
         id: 'drama', name: 'Drama (Drakor)', color: '#14b8a6', badge: 'MOVIE', category: 'Movie API',
         endpoints: [
-          { id: 'homekorea', path: '/drama/home/korea', desc: 'Home Korea', fields: [] },
-          { id: 'homechina', path: '/drama/home/china', desc: 'Home China', fields: [] },
-          { id: 'terbaru', path: '/drama/terbaru', desc: 'Latest', fields: [] },
-          { id: 'trending', path: '/drama/trending', desc: 'Trending', fields: [] },
-          { id: 'ongoing', path: '/drama/ongoing', desc: 'Ongoing', fields: [] },
+          {
+            id: 'homekorea', path: '/drama/home/korea', desc: 'Home Korea', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' },
+              { name: 'sort', label: 'sort', value: 'LATEST' }
+            ]
+          },
+          {
+            id: 'homechina', path: '/drama/home/china', desc: 'Home China', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' },
+              { name: 'sort', label: 'sort', value: 'LATEST' }
+            ]
+          },
+          {
+            id: 'terbaru', path: '/drama/terbaru', desc: 'Latest', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' }
+            ]
+          },
+          {
+            id: 'trending', path: '/drama/trending', desc: 'Trending', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' },
+              { name: 'days', label: 'days', type: 'number', value: '30' }
+            ]
+          },
+          {
+            id: 'ongoing', path: '/drama/ongoing', desc: 'Ongoing', fields: [
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' }
+            ]
+          },
+          { id: 'categorylist', path: '/drama/category-list', desc: 'Category List', fields: [] },
           {
             id: 'category', path: '/drama/category', desc: 'By Category', fields: [
-              { name: 'kategori', label: 'kategori', required: true, value: 'Drama China' }
+              { name: 'category_name', label: 'category_name', required: true, value: 'Comedy' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' },
+              { name: 'sort', label: 'sort', value: 'LATEST' }
             ]
           },
           {
             id: 'search', path: '/drama/search', desc: 'Search', fields: [
-              { name: 'q', label: 'query', required: true, value: 'cinta' }
+              { name: 'q', label: 'query', required: true, value: 'cinta' },
+              { name: 'page', label: 'page', type: 'number', value: '1' },
+              { name: 'limit', label: 'limit', type: 'number', value: '30' },
+              { name: 'type', label: 'type', value: '1' },
+              { name: 'order', label: 'order', value: '1' }
             ]
           },
           {
-            id: 'info', path: '/drama/detail', desc: 'Detail (id atau slug)', fields: [
-              { name: 'id', label: 'id', value: '4961' },
-              { name: 'slug', label: 'slug', value: '' }
+            id: 'info', path: '/drama/detail', desc: 'Detail (info + artist + episodes)', fields: [
+              { name: 'id', label: 'id', required: true, value: '3503' }
             ]
           },
           {
-            id: 'stream', path: '/drama/stream', desc: 'Stream (id atau slug)', fields: [
-              { name: 'id', label: 'id', value: '4961' },
-              { name: 'slug', label: 'slug', value: '' },
-              { name: 'ep', label: 'episode', type: 'number', value: '1' }
+            id: 'stream', path: '/drama/stream', desc: 'Stream (generate link)', fields: [
+              { name: 'streaming', label: 'streaming_id', required: true, value: '51313' }
             ]
           }
         ]
