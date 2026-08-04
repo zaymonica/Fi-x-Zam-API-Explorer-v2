@@ -19,7 +19,7 @@ CORS_HEADERS = {
 }
 
 # ── API Branding ────────────────────────────────────────────────────
-API_AUTHOR  = os.getenv('API_AUTHOR', 'Sonzai X シ')
+API_AUTHOR  = os.getenv('API_AUTHOR', 'Fi x Zam シ')
 API_CONTACT = os.getenv('API_CONTACT', 'https://t.me/November2k')
 ADMIN_PASSWORD_HASH = "5c6058f3aa0a004c491c3aa890eafcb5"  # md5("admeme404")
 

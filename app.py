@@ -88,7 +88,7 @@ def check_maintenance():
     if first_segment and first_segment in disabled:
         from utils import json_response
         return json_response({
-            "author": "Sonzai X シ",
+            "author": "Fi x Zam シ",
             "message": "error",
             "error": f"Provider '{first_segment}' is currently under maintenance"
         }, 503)
