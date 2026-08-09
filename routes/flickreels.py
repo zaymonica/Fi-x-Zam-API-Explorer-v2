@@ -148,7 +148,7 @@ def _clean_drama(item):
     }
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }] with fields
 # drama_id / drama_name / thumb_url / episode_count(str) / description / tags.
 def _to_book(cleaned):

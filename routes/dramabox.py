@@ -13,7 +13,7 @@ dramabox_bp = Blueprint('dramabox', __name__)
 SUPABASE_BASE = "https://ovxlfhukkravtmoamjul.supabase.co/functions/v1/dramabox"
 
 SUPABASE_HEADERS = {
-    "User-Agent": "SonzaiX-API/1.0",
+    "User-Agent": "Fi-x-Zam-API/1.0",
     "Accept": "application/json",
 }
 
@@ -30,7 +30,7 @@ def _proxy(path: str = "", params: dict = None):
         return json_response({"error": "Upstream request failed", "detail": str(e)}, 502)
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # The app expects list endpoints to return data: [{ "books": [<MeloloBook>] }]
 # (drama_id / drama_name / thumb_url / episode_count(str) / description /
 # watch_value / tags). DramaBox's upstream wraps books in many container

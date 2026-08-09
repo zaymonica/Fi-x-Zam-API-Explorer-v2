@@ -7,7 +7,7 @@
  *   /proxy?url=<URL>               - FlickReels HLS proxy (.m3u8 rewriting + .ts streaming)
  *
  * Deploy:
- *   npx wrangler deploy hls-proxy-worker.js --name proxy-sonzaixlab
+ *   npx wrangler deploy hls-proxy-worker.js --name proxy-fi-x-zam
  */
 
 export default {

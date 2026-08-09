@@ -1,6 +1,6 @@
 """
 app.py — Main Flask Application (migrated from worker.js)
-Sonzai X API — Python/Flask version for VPS deployment
+Fi x Zam API — Python/Flask version for VPS deployment
 """
 import os
 from flask import Flask, send_from_directory, request
@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, static_folder='static')
-app.secret_key = os.environ.get('SECRET_KEY', 'sonzaix-api-secret-2025')
+app.secret_key = os.environ.get('SECRET_KEY', 'fi-x-zam-api-secret-2026')
 # Don't redirect /foo -> /foo/ — trailing-slash redirects break HTTPS callers
 # when running behind a reverse proxy that doesn't preserve scheme.
 app.url_map.strict_slashes = False
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     
     print(f"""
     +==========================================+
-    |     Sonzai X API - Flask Edition         |
+    |     Fi x Zam API - Flask Edition         |
     |     Running on http://{host}:{port}        |
     +==========================================+
     """)

@@ -105,7 +105,7 @@ def format_video_url(url):
     return url
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. MeloShort
 # returns flat drama items with its own field names (drama_id / drama_title
 # / drama_cover / chapters). Map each item to the app's MeloloBook.
@@ -246,7 +246,7 @@ def detail():
         return json_response({
             "type": "detail",
             "data": {
-                # ── app (SonzaiXBox) shape ──
+                # ── app (Fi x Zam) shape ──
                 "drama_id": drama_info.get('drama_id', drama_id),
                 "drama_name": drama_info.get('drama_title', ''),
                 "description": drama_info.get('drama_description', ''),
@@ -304,7 +304,7 @@ def stream():
         return json_response({
             "type": "stream",
             "data": {
-                # ── app (SonzaiXBox) shape ──
+                # ── app (Fi x Zam) shape ──
                 "episode_id": data.get('chapter_id'),
                 "videos": videos,
                 "subtitles": subtitles,

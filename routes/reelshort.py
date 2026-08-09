@@ -185,7 +185,7 @@ def _resp(type_, data, extra=None):
 # ═══════════════════════════════════════════════════════════════════════
 #  Normalization → app shape
 #
-#  The SonzaiXBox app expects every short-drama list endpoint to return
+#  The Fi x Zam app expects every short-drama list endpoint to return
 #  `data: [ { "books": [ <MeloloBook> ] } ]`, where a MeloloBook has
 #  drama_id / drama_name / thumb_url / episode_count(str) / description /
 #  watch_value / tags. ReelShort's upstream gives book dicts with
@@ -438,7 +438,7 @@ def detail():
             tags = [tags]
 
         return _resp("detail", {
-            # ── app (SonzaiXBox) shape ──
+            # ── app (Fi x Zam) shape ──
             "drama_id": book_info.get("book_id", book_id),
             "drama_name": book_info.get("book_title", ""),
             "description": book_info.get("special_desc", "") or book_info.get("book_sub_title", ""),
@@ -660,7 +660,7 @@ def stream():
                     is_locked = False
 
         return _resp("stream", {
-            # ── app (SonzaiXBox) shape: ReelshortStreamData ──
+            # ── app (Fi x Zam) shape: ReelshortStreamData ──
             "isLocked": is_locked,
             "videoList": video_list,
             # ── raw fields (kept for the web UI / other consumers) ──

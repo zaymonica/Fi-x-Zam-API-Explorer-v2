@@ -29,7 +29,7 @@ DOMAIN_UA_MAP = {
     "melolostatic.com": "okhttp/4.12.0",
     "byteintlapi.com": "okhttp/4.12.0",
     # DramaBox (supabase edge → usually its own CDN)
-    "supabase.co": "SonzaiX-API/1.0",
+    "supabase.co": "Fi-x-Zam-API/1.0",
     # NetShort / DramaKuy
     "dramakuy.com": "Mozilla/5.0 (Linux; Android 12; SM-A156E Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/110.0.5481.154 Mobile Safari/537.36",
     # PineDrama (tiktokcdn)

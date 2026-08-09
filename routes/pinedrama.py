@@ -224,7 +224,7 @@ def _transform_collections(result):
     return dramas
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. PineDrama
 # has no per-drama description; episode count comes from num_episodes.
 def _pd_to_book(d):
@@ -1037,7 +1037,7 @@ def ranking():
     return trending()
 
 
-# App-standard aliases (SonzaiXBox calls /populer and /new).
+# App-standard aliases (Fi x Zam calls /populer and /new).
 @pinedrama_bp.route('/populer', methods=['GET'])
 def populer():
     return trending()

@@ -206,7 +206,7 @@ _SESSION = _NetShortSession()
 
 
 # ═══════════════════════════════════════════════════════════════════════
-#  Normalization → app (SonzaiXBox) shape
+#  Normalization → app (Fi x Zam) shape
 #
 #  The app expects list endpoints to return data: [{ "books": [<MeloloBook>] }]
 #  and detail to return drama_id / drama_name / thumb_url / episode_count(int) /

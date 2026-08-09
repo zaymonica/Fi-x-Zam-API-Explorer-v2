@@ -268,7 +268,7 @@ serve(async (req: Request) => {
   try {
     if (path === "/" || path === "") {
       return jsonResponse({
-        author: "Sonzai X シ",
+        author: "Fi x Zam シ",
         contact: "https://t.me/November2k",
         status: "online",
         service: "MovieBox Ranking API",

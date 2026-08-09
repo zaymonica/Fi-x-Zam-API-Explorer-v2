@@ -362,7 +362,7 @@ def _resp(type_: str, data, **extra):
     return json_response(payload)
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. ShortMax
 # nests shortPlay items inside many containers (tabPageResponse / banner
 # lists / forYouList / shortPlays / items). A shortPlay item has

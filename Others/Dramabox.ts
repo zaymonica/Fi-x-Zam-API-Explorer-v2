@@ -451,7 +451,7 @@ serve(async (req) => {
 
         // Info Route Provide Documentation
         return jsonResponse({
-          author: "Sonzai X シ",
+          author: "Fi x Zam シ",
           message: "DramaBox API Native Supabase",
           routes: [
             "/?home&page=1",

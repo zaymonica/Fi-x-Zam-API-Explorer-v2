@@ -1,4 +1,4 @@
-# Sonzai X API — Python/Flask Edition
+# Fi x Zam API - Python/Flask Edition
 
 Migrasi dari Cloudflare Worker (JavaScript) ke Python/Flask untuk deployment di VPS.
 
@@ -99,11 +99,11 @@ gunicorn app:app -b 0.0.0.0:5000 -w 4 --timeout 120
 
 ### 5. Systemd Service (Optional)
 
-Buat file `/etc/systemd/system/sonzaix-api.service`:
+Buat file `/etc/systemd/system/fi-x-zam-api.service`:
 
 ```ini
 [Unit]
-Description=Sonzai X API Flask
+Description=Fi x Zam API Flask
 After=network.target
 
 [Service]
@@ -118,8 +118,8 @@ WantedBy=multi-user.target
 ```
 
 ```bash
-sudo systemctl enable sonzaix-api
-sudo systemctl start sonzaix-api
+sudo systemctl enable fi-x-zam-api
+sudo systemctl start fi-x-zam-api
 ```
 
 ## 📝 Perbedaan dari Versi Cloudflare Worker

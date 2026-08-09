@@ -150,7 +150,7 @@ def dw_post(path, body):
     return _request("POST", path, body)
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. DramaWave
 # nests a "series" object inside feed items. Each series has
 # key/title/cover/desc/series_tag/episode_count.

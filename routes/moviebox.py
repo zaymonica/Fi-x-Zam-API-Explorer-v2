@@ -12,7 +12,7 @@ moviebox_bp = Blueprint('moviebox', __name__, url_prefix='/moviebox')
 SUPABASE_BASE = "https://ovxlfhukkravtmoamjul.supabase.co/functions/v1/moviebox"
 
 SUPABASE_HEADERS = {
-    "User-Agent": "SonzaiX-API/1.0",
+    "User-Agent": "Fi-x-Zam-API/1.0",
     "Accept": "application/json",
 }
 

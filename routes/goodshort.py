@@ -150,7 +150,7 @@ def _req(endpoint: str, body):
     return data
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. GoodShort
 # nests books in several shapes: recommentList[].book, records[].items[],
 # searchResult.records[]. These helpers flatten any of them.
@@ -471,7 +471,7 @@ def goodshort_rawurl(book_id):
         url  = f"{DRAMABOS_BASE}/rawurl/{book_id}"
         resp = http_requests.get(url, params={
             "lang": lang, "q": quality, "code": token
-        }, headers={"User-Agent": "SonzaiX-API/1.0"}, timeout=20)
+        }, headers={"User-Agent": "Fi-x-Zam-API/1.0"}, timeout=20)
 
         data = resp.json()
     except Exception as e:
@@ -581,7 +581,7 @@ def goodshort_proxy_key():
             resp = http_requests.get(
                 f"{DRAMABOS_BASE}/rawurl/{book_id}",
                 params={"lang": "in", "q": "720p", "code": token},
-                headers={"User-Agent": "SonzaiX-API/1.0"},
+                headers={"User-Agent": "Fi-x-Zam-API/1.0"},
                 timeout=20
             )
             k64 = (resp.json().get("data") or {}).get("videoKey", "")

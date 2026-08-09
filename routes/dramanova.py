@@ -344,7 +344,7 @@ def _shape_drama_list_item(item):
     }
 
 
-# ── Normalization → SonzaiXBox app shape ──────────────────────────────
+# ── Normalization → Fi x Zam app shape ──────────────────────────────
 # App list endpoints expect data: [{ "books": [<MeloloBook>] }]. DramaNova
 # items come in two field styles: raw (dramaId/posterImg/totalEpisodes) and
 # shaped (drama_id/poster/total_episodes). _dn_book handles both.
