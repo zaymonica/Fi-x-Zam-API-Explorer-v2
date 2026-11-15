@@ -4,3 +4,9 @@ venv/
 .venv/
 .env
 database/*.json
+# token sensitif & cache video (jangan ke-commit)
+sonzaix/*_token.txt
+sonzaix/*token*.txt
+cache/
+*.mp4
+*.ts

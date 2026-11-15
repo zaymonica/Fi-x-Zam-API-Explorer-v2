@@ -23,34 +23,28 @@ from flask import Blueprint, request
 
 from utils import json_response
 
-# ── path Sonzai (biar bisa import app.providers.*) ──────────────────
-# Provider native mengimpor class dari codebase Sonzai (app/providers/*.py).
-# Kalau codebase Sonzai TIDAK tersedia (mis. jalan lokal tanpa Sonzai),
-# blueprint tetap ter-load tapi PROVIDERS kosong -> endpoint kasih pesan jelas,
-# SISANYA Fi-x-Zam tetap jalan normal.
-SONZAI_ROOT = os.getenv("SONZAI_ROOT", "/home/ubuntu/aggregator")
+# ── provider BUNDLED (folder sonzaix/ di dalam Fi-x-Zam) ────────────
+# Semua class provider + downloader sudah di-bundle ke sonzaix/, jadi
+# Fi-x-Zam MANDIRI penuh: jalan di lokal Windows ATAU VPS tanpa
+# codebase Sonzai terpisah. Cuma butuh dependency: httpx + cryptography.
 PROVIDERS = {}
 _load_error = None
 try:
-    if not os.path.isdir(SONZAI_ROOT):
-        raise FileNotFoundError(f"Sonzai root tidak ditemukan: {SONZAI_ROOT}")
-    if SONZAI_ROOT not in sys.path:
-        sys.path.insert(0, SONZAI_ROOT)
-    _cwd = os.getcwd()
-    os.chdir(SONZAI_ROOT)  # provider baca env/data relatif
-    _token_file = "/home/ubuntu/sonzai_embed_token2.txt"
-    if os.path.exists(_token_file):
-        os.environ.setdefault("MELOLO_TOKEN", open(_token_file).read().strip())
+    # token Melolo opsional (kalau ada file token di sebelah app)
+    for _tok in ("sonzaix/melolo_token.txt", "database/melolo_token.txt"):
+        if os.path.exists(_tok):
+            os.environ.setdefault("MELOLO_TOKEN", open(_tok).read().strip())
+            break
 
-    # ── import class provider Sonzai ────────────────────────────────
-    from app.providers.reelshort import ReelShortProvider
-    from app.providers.melolo import MeloloProvider
-    from app.providers.goodshort import GoodShortProvider
-    from app.providers.cashdrama import CashDramaProvider
-    from app.providers.dramabox import DramaboxProvider
-    from app.providers.shortmax import ShortMaxProvider
-    from app.providers.rapidtv import RapidtvProvider
-    from app.providers.dramanova import DramaNovaProvider
+    # ── import class provider BUNDLED ──────────────────────────────
+    from sonzaix.reelshort import ReelShortProvider
+    from sonzaix.melolo import MeloloProvider
+    from sonzaix.goodshort import GoodShortProvider
+    from sonzaix.cashdrama import CashDramaProvider
+    from sonzaix.dramabox import DramaboxProvider
+    from sonzaix.shortmax import ShortMaxProvider
+    from sonzaix.rapidtv import RapidtvProvider
+    from sonzaix.dramanova import DramaNovaProvider
 
     PROVIDERS = {
         "reelshort":  ReelShortProvider(),
@@ -62,7 +56,6 @@ try:
         "rapidtv":    RapidtvProvider(),
         "dramanova":  DramaNovaProvider(),
     }
-    os.chdir(_cwd)  # kembalikan cwd biar gak ganggu modul lain
 except Exception as _e:
     _load_error = f"{type(_e).__name__}: {_e}"
     PROVIDERS = {}
@@ -284,9 +277,9 @@ def download(name):
 
     # pakai downloader + remux Sonzai (async) via event loop persisten
     import hashlib
-    from app import downloader as _dl
+    from sonzaix import downloader as _dl
     import httpx as _httpx
-    cache_dir = "/home/ubuntu/fixzam/cache"
+    cache_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "cache")
     os.makedirs(cache_dir, exist_ok=True)
     key_raw = f"{name}|{sorted(params.items())}|{fmt}"
     ckey = hashlib.sha256(key_raw.encode()).hexdigest()[:24]

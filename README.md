@@ -70,7 +70,12 @@ GET /sonzai/<provider>/download?book_id=<id>&ep=1   # unduh MP4 (remux HLS→MP4
 
 ### Ketergantungan Provider Native
 
-Provider native **mengimpor class provider** dari codebase Sonzai (`app/providers/*.py`). Untuk jalan lokal, pastikan path `/home/ubuntu/aggregator` tersedia, atau sesuaikan `sys.path.insert(...)` di `routes/sonzai_native.py` mengarah ke folder yang punya `app/providers/`.
+**Provider sudah di-BUNDLE** ke dalam Fi-x-Zam (folder `sonzaix/`) — **gak butuh codebase Sonzai terpisah**. Fi-x-Zam mandiri penuh, jalan di lokal Windows maupun VPS.
+
+Dependency tambahan yang dibutuhkan provider bundled:
+- `httpx` — HTTP client async (sudah di `requirements.txt`)
+- `cryptography` — dekripsi HLS downloader (sudah di `requirements.txt`)
+- `ffmpeg` — remux HLS→MP4 (install terpisah)
 
 ## 🚀 Cara Deploy di VPS
 
