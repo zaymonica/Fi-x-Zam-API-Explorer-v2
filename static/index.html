@@ -659,50 +659,21 @@
       {
         id: 'melolo', name: 'Melolo Short Drama', color: '#ff6b6b', badge: 'VIDEO', category: 'Short Drama API',
         endpoints: [
-          { id: 'languages', path: '/melolo/languages', desc: 'Languages', fields: [] },
-          {
-            id: 'home', path: '/melolo/home', desc: 'Homepage', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'id' }
-            ]
-          },
-          {
-            id: 'new', path: '/melolo/new', desc: 'Latest', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'id' }
-            ]
-          },
-          {
-            id: 'populer', path: '/melolo/populer', desc: 'Trending', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'id' }
-            ]
-          },
-          {
-            id: 'search', path: '/melolo/search', desc: 'Search', fields: [
-              { name: 'q', label: 'query', required: true, value: 'cinta' },
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'id' }
-            ]
-          },
-          {
-            id: 'detail', path: '/melolo/detail', desc: 'Detail', fields: [
-              { name: 'id', label: 'id', required: true, value: '7602210251965729797' },
-              { name: 'lang', label: 'lang', value: 'id' }
-            ]
-          },
-          {
-            id: 'stream', path: '/melolo/stream', desc: 'Stream', fields: [
-              { name: 'id', label: 'Drama ID', required: true, value: '7522723499182394385' },
-              { name: 'ep', label: 'Episode', type: 'number', value: '1' }
-            ]
-          },
-          {
-            id: 'streamv2', path: '/melolo/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
-              { name: 'id', label: 'Drama ID', required: true, value: '7648901065357675525' },
-              { name: 'ep', label: 'Episode', type: 'number', value: '1' }
-            ]
-          }
+          { id: 'home', path: '/sonzai/melolo/home', desc: 'Katalog', fields: [] },
+          { id: 'search', path: '/sonzai/melolo/search', desc: 'Cari', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ] },
+          { id: 'detail', path: '/sonzai/melolo/detail', desc: 'Detail + Episode', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '7696798742682618933' }
+            ] },
+          { id: 'stream', path: '/sonzai/melolo/stream', desc: 'Stream', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '7696798742682618933' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/melolo/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '7696798742682618933' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
         ]
       },
       {
@@ -920,54 +891,21 @@
       {
         id: 'reelshort', name: 'ReelShort Short Drama', color: '#e11d48', badge: 'VIDEO', category: 'Short Drama API',
         endpoints: [
-          {
-            id: 'home', path: '/reelshort/home', desc: 'Halaman Utama', fields: [
-              { name: 'tab_id', label: 'tab_id', value: '0' },
-              { name: 'sub_tab_id', label: 'sub_tab_id', value: '0' }
-            ]
-          },
-          {
-            id: 'new', path: '/reelshort/new', desc: 'Drama Terbaru (Waterfall)', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '20' },
-              { name: 'bs_id', label: 'bs_id (opsional)', value: '' }
-            ]
-          },
-          {
-            id: 'populer', path: '/reelshort/populer', desc: 'Trending / Leaderboard', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '20' },
-              { name: 'period', label: 'periode', value: '0' },
-              { name: 'rule', label: 'aturan', value: '0' }
-            ]
-          },
-          {
-            id: 'search', path: '/reelshort/search', desc: 'Pencarian', fields: [
-              { name: 'q', label: 'kata kunci', required: true, value: 'cinta' },
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '10' }
-            ]
-          },
-          {
-            id: 'detail', path: '/reelshort/detail', desc: 'Detail Drama + Episodes', fields: [
-              { name: 'id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' }
-            ]
-          },
-          {
-            id: 'stream', path: '/reelshort/stream', desc: 'Streaming Episode', fields: [
-              { name: 'id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' },
-              { name: 'episode_no', label: 'episode_no', type: 'number', value: '1' }
-            ]
-          },
-          {
-            id: 'streamv2', path: '/reelshort/streamv2', desc: 'Streaming V2 (playable/decrypted)', fields: [
-              { name: 'id', label: 'book_id', required: true, value: '6954c5905a8236e84c01e1cd' },
-              { name: 'episode_no', label: 'episode_no', type: 'number', value: '59' }
-            ]
-          },
-          {
-            id: 'session', path: '/reelshort/session', desc: 'Info Sesi (debug)', fields: []
-          }
+          { id: 'home', path: '/sonzai/reelshort/home', desc: 'Katalog', fields: [] },
+          { id: 'search', path: '/sonzai/reelshort/search', desc: 'Cari', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ] },
+          { id: 'detail', path: '/sonzai/reelshort/detail', desc: 'Detail + Episode', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' }
+            ] },
+          { id: 'stream', path: '/sonzai/reelshort/stream', desc: 'Stream', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/reelshort/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '68088635a2e8eb174205fdc6' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
         ]
       },
       {
@@ -1012,137 +950,61 @@
       {
         id: 'shortmax', name: 'ShortMax Short Drama', color: '#fb923c', badge: 'VIDEO', category: 'Short Drama API',
         endpoints: [
-          { id: 'home', path: '/shortmax/home', desc: 'Discover Tab Home', fields: [] },
-          {
-            id: 'new', path: '/shortmax/new', desc: 'For You Latest', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '20' }
-            ]
-          },
-          {
-            id: 'populer', path: '/shortmax/populer', desc: 'Popular Shorts (banner-based)', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '20' },
-              { name: 'bannerId', label: 'bannerId (opsional)', value: '' }
-            ]
-          },
-          {
-            id: 'search', path: '/shortmax/search', desc: 'Keyword Search', fields: [
-              { name: 'q', label: 'query', required: true, value: 'cinta' },
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'limit', label: 'limit', type: 'number', value: '20' }
-            ]
-          },
-          {
-            id: 'detail', path: '/shortmax/detail', desc: 'Drama Detail + Episodes', fields: [
-              { name: 'id', label: 'shortPlayId', required: true, value: '21369' },
-              { name: 'episode_limit', label: 'episode_limit', type: 'number', value: '100' }
-            ]
-          },
-          {
-            id: 'stream', path: '/shortmax/stream', desc: 'Episode Stream (m3u8)', fields: [
-              { name: 'id', label: 'shortPlayId / dreamId', required: true, value: '1365724' },
-              { name: 'episode_no', label: 'episode_no', type: 'number', value: '1' },
-              { name: 'next', label: 'nextEpisodes', type: 'number', value: '5' }
-            ]
-          },
-          {
-            id: 'streamv2', path: '/shortmax/streamv2', desc: 'Stream V2 (playable/decrypted)', fields: [
-              { name: 'id', label: 'bookId', required: true, value: '13166' },
-              { name: 'ep', label: 'episode', type: 'number', value: '1' }
-            ]
-          },
-          { id: 'session', path: '/shortmax/session', desc: 'Session State (debug)', fields: [] },
-          { id: 'login', path: '/shortmax/login', desc: 'Force Tourist Login (debug)', fields: [] }
+          { id: 'home', path: '/sonzai/shortmax/home', desc: 'Katalog', fields: [] },
+          { id: 'search', path: '/sonzai/shortmax/search', desc: 'Cari', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ] },
+          { id: 'detail', path: '/sonzai/shortmax/detail', desc: 'Detail + Episode', fields: [
+              { name: 'id', label: 'id', required: true, value: '41678' }
+            ] },
+          { id: 'stream', path: '/sonzai/shortmax/stream', desc: 'Stream', fields: [
+              { name: 'id', label: 'id', required: true, value: '41678' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/shortmax/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'id', label: 'id', required: true, value: '41678' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
         ]
       },
       {
         id: 'dramabox', name: 'DramaBox Short Drama', color: '#a855f7', badge: 'VIDEO', category: 'Short Drama API',
         endpoints: [
-          {
-            id: 'home', path: '/dramabox/home', desc: 'Homepage', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'new', path: '/dramabox/new', desc: 'Latest', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'populer', path: '/dramabox/populer', desc: 'Trending', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'rank', path: '/dramabox/rank', desc: 'Rank', fields: [
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'category', path: '/dramabox/category', desc: 'Category', fields: [
-              { name: 'category', label: 'category', value: 'cina' },
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'search', path: '/dramabox/search', desc: 'Search', fields: [
-              { name: 'q', label: 'query', required: true, value: 'cinta' },
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'detail', path: '/dramabox/detail', desc: 'Detail', fields: [
-              { name: 'bookId', label: 'bookId', required: true, value: '42000004908' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          },
-          {
-            id: 'stream', path: '/dramabox/stream', desc: 'Stream', fields: [
-              { name: 'bookId', label: 'bookId', required: true, value: '42000004908' },
-              { name: 'chapterIndex', label: 'chapterIndex', type: 'number', value: '0' },
-              { name: 'lang', label: 'lang', value: 'in' }
-            ]
-          }
+          { id: 'home', path: '/sonzai/dramabox/home', desc: 'Katalog', fields: [] },
+          { id: 'search', path: '/sonzai/dramabox/search', desc: 'Cari', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ] },
+          { id: 'detail', path: '/sonzai/dramabox/detail', desc: 'Detail + Episode', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '42000030764' }
+            ] },
+          { id: 'stream', path: '/sonzai/dramabox/stream', desc: 'Stream', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '42000030764' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/dramabox/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '42000030764' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
         ]
       },
       {
         id: 'goodshort', name: 'GoodShort Short Drama', color: '#10b981', badge: 'VIDEO', category: 'Short Drama API',
         endpoints: [
-          { id: 'home', path: '/goodshort/home', desc: 'Homepage', fields: [] },
-          {
-            id: 'new', path: '/goodshort/new', desc: 'Latest', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' },
-              { name: 'channelId', label: 'channelId', value: '563' }
-            ]
-          },
-          {
-            id: 'populer', path: '/goodshort/populer', desc: 'Trending', fields: [
-              { name: 'page', label: 'page', type: 'number', value: '1' }
-            ]
-          },
-          { id: 'nav', path: '/goodshort/nav', desc: 'Categories', fields: [] },
-          {
-            id: 'search', path: '/goodshort/search', desc: 'Search', fields: [
-              { name: 'q', label: 'query', required: true, value: 'SISTEM' },
-              { name: 'page', label: 'page', type: 'number', value: '1' }
-            ]
-          },
-          {
-            id: 'detail', path: '/goodshort/detail', desc: 'Detail', fields: [
-              { name: 'bookId', label: 'bookId', required: true, value: '31001293031' }
-            ]
-          },
-          {
-            id: 'stream', path: '/goodshort/stream', desc: 'Stream (All Episodes)', fields: [
-              { name: 'bookId', label: 'bookId', required: true, value: '31001293031' }
-            ]
-          }
+          { id: 'home', path: '/sonzai/goodshort/home', desc: 'Katalog', fields: [] },
+          { id: 'search', path: '/sonzai/goodshort/search', desc: 'Cari', fields: [
+              { name: 'q', label: 'query', required: true, value: 'cinta' }
+            ] },
+          { id: 'detail', path: '/sonzai/goodshort/detail', desc: 'Detail + Episode', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '31001222033' }
+            ] },
+          { id: 'stream', path: '/sonzai/goodshort/stream', desc: 'Stream', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '31001222033' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/goodshort/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '31001222033' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
         ]
       },
       {

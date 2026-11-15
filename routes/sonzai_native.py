@@ -30,11 +30,19 @@ from utils import json_response
 PROVIDERS = {}
 _load_error = None
 try:
-    # token Melolo opsional (kalau ada file token di sebelah app)
-    for _tok in ("sonzaix/melolo_token.txt", "database/melolo_token.txt"):
-        if os.path.exists(_tok):
-            os.environ.setdefault("MELOLO_TOKEN", open(_tok).read().strip())
-            break
+    # token Melolo: env MELOLO_TOKEN > file token > bundled _tokens.py
+    if not os.environ.get("MELOLO_TOKEN"):
+        for _tok in ("sonzaix/melolo_token.txt", "database/melolo_token.txt"):
+            if os.path.exists(_tok):
+                os.environ["MELOLO_TOKEN"] = open(_tok).read().strip()
+                break
+    if not os.environ.get("MELOLO_TOKEN"):
+        try:
+            from sonzaix._tokens import MELOLO_TOKEN as _bundled_token
+            if _bundled_token:
+                os.environ["MELOLO_TOKEN"] = _bundled_token
+        except Exception:
+            pass
 
     # ── import class provider BUNDLED ──────────────────────────────
     from sonzaix.reelshort import ReelShortProvider

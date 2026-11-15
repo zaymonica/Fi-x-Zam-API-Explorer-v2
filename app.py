@@ -27,20 +27,13 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 from routes.cors_proxy import cors_bp
 from routes.sosmed import sosmed_bp
 from routes.shinigami import shinigami_bp
-from routes.melolo import melolo_bp
-from routes.dramabox import dramabox_bp
-from routes.dramawave import dramawave_bp
-from routes.dramanova import dramanova_bp
 from routes.drama import drama_bp
-from routes.goodshort import goodshort_bp
 from routes.anime import anime_bp
-from routes.reelshort import reelshort_bp
 from routes.freereels import freereels_bp
 from routes.netshort import netshort_bp
 from routes.meloshort import meloshort_bp
 from routes.flickreels import flickreels_bp
 from routes.terabox import terabox_bp
-from routes.shortmax import shortmax_bp
 from routes.youtube import youtube_bp
 from routes.moviebox import moviebox_bp
 from routes.pinedrama import pinedrama_bp
@@ -49,24 +42,22 @@ from routes.downloader import downloader_bp
 from routes.sonzai_bridge import sonzai_bp
 from routes.sonzai_native import sonzai_native_bp
 
+# NOTE: Blueprint short-drama LAMA (reelshort, melolo, goodshort, dramabox,
+# shortmax, dramanova) SUDAH DIHAPUS — sekarang dilayani oleh provider BUNDLED
+# via routes/sonzai_native.py di endpoint /sonzai/<provider>/...
+# Blueprint lama rusak (nyangkut ke dramakuy.com & proxy mati).
+
 # ── Register Blueprints ─────────────────────────────────────────────
 app.register_blueprint(cors_bp)
 app.register_blueprint(sosmed_bp)
 app.register_blueprint(shinigami_bp)
-app.register_blueprint(melolo_bp)
-app.register_blueprint(dramabox_bp)
-app.register_blueprint(dramawave_bp)
-app.register_blueprint(dramanova_bp)
 app.register_blueprint(drama_bp)
-app.register_blueprint(goodshort_bp)
 app.register_blueprint(anime_bp)
-app.register_blueprint(reelshort_bp)
 app.register_blueprint(freereels_bp)
 app.register_blueprint(netshort_bp)
 app.register_blueprint(meloshort_bp)
 app.register_blueprint(flickreels_bp)
 app.register_blueprint(terabox_bp)
-app.register_blueprint(shortmax_bp)
 app.register_blueprint(youtube_bp)
 app.register_blueprint(moviebox_bp)
 app.register_blueprint(pinedrama_bp)
