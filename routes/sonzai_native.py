@@ -24,35 +24,48 @@ from flask import Blueprint, request
 from utils import json_response
 
 # ── path Sonzai (biar bisa import app.providers.*) ──────────────────
+# Provider native mengimpor class dari codebase Sonzai (app/providers/*.py).
+# Kalau codebase Sonzai TIDAK tersedia (mis. jalan lokal tanpa Sonzai),
+# blueprint tetap ter-load tapi PROVIDERS kosong -> endpoint kasih pesan jelas,
+# SISANYA Fi-x-Zam tetap jalan normal.
 SONZAI_ROOT = os.getenv("SONZAI_ROOT", "/home/ubuntu/aggregator")
-if SONZAI_ROOT not in sys.path:
-    sys.path.insert(0, SONZAI_ROOT)
-os.chdir(SONZAI_ROOT)  # provider baca env/data relatif
-_token_file = "/home/ubuntu/sonzai_embed_token2.txt"
-if os.path.exists(_token_file):
-    os.environ.setdefault("MELOLO_TOKEN", open(_token_file).read().strip())
+PROVIDERS = {}
+_load_error = None
+try:
+    if not os.path.isdir(SONZAI_ROOT):
+        raise FileNotFoundError(f"Sonzai root tidak ditemukan: {SONZAI_ROOT}")
+    if SONZAI_ROOT not in sys.path:
+        sys.path.insert(0, SONZAI_ROOT)
+    _cwd = os.getcwd()
+    os.chdir(SONZAI_ROOT)  # provider baca env/data relatif
+    _token_file = "/home/ubuntu/sonzai_embed_token2.txt"
+    if os.path.exists(_token_file):
+        os.environ.setdefault("MELOLO_TOKEN", open(_token_file).read().strip())
 
-# ── import class provider Sonzai ────────────────────────────────────
-from app.providers.reelshort import ReelShortProvider
-from app.providers.melolo import MeloloProvider
-from app.providers.goodshort import GoodShortProvider
-from app.providers.cashdrama import CashDramaProvider
-from app.providers.dramabox import DramaboxProvider
-from app.providers.shortmax import ShortMaxProvider
-from app.providers.rapidtv import RapidtvProvider
-from app.providers.dramanova import DramaNovaProvider
+    # ── import class provider Sonzai ────────────────────────────────
+    from app.providers.reelshort import ReelShortProvider
+    from app.providers.melolo import MeloloProvider
+    from app.providers.goodshort import GoodShortProvider
+    from app.providers.cashdrama import CashDramaProvider
+    from app.providers.dramabox import DramaboxProvider
+    from app.providers.shortmax import ShortMaxProvider
+    from app.providers.rapidtv import RapidtvProvider
+    from app.providers.dramanova import DramaNovaProvider
 
-# registry: nama -> instance provider
-PROVIDERS = {
-    "reelshort":  ReelShortProvider(),
-    "melolo":     MeloloProvider(),
-    "goodshort":  GoodShortProvider(),
-    "cashdrama":  CashDramaProvider(),
-    "dramabox":   DramaboxProvider(),
-    "shortmax":   ShortMaxProvider(),
-    "rapidtv":    RapidtvProvider(),
-    "dramanova":  DramaNovaProvider(),
-}
+    PROVIDERS = {
+        "reelshort":  ReelShortProvider(),
+        "melolo":     MeloloProvider(),
+        "goodshort":  GoodShortProvider(),
+        "cashdrama":  CashDramaProvider(),
+        "dramabox":   DramaboxProvider(),
+        "shortmax":   ShortMaxProvider(),
+        "rapidtv":    RapidtvProvider(),
+        "dramanova":  DramaNovaProvider(),
+    }
+    os.chdir(_cwd)  # kembalikan cwd biar gak ganggu modul lain
+except Exception as _e:
+    _load_error = f"{type(_e).__name__}: {_e}"
+    PROVIDERS = {}
 
 # default lang per provider (ReelShort pakai 'in', lainnya 'id')
 DEFAULT_LANG = {"reelshort": "in", "melolo": "id", "goodshort": "id",
@@ -110,6 +123,13 @@ def _wrap(res, extra=None):
 
 
 def _get_provider(name):
+    if not PROVIDERS:
+        msg = ("Provider native tidak tersedia: codebase Sonzai tidak ditemukan. "
+               "Set env SONZAI_ROOT ke folder yang punya app/providers/, "
+               "atau jalankan Fi-x-Zam dengan codebase Sonzai.")
+        if _load_error:
+            msg += f" [{_load_error}]"
+        return None, json_response({"error": msg}, 503)
     p = PROVIDERS.get(name)
     if p is None:
         return None, json_response({"error": f"provider '{name}' tidak tersedia"}, 404)
