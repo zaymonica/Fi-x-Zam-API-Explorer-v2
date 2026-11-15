@@ -41,6 +41,7 @@ from routes.admin import admin_bp, get_disabled_providers
 from routes.downloader import downloader_bp
 from routes.sonzai_bridge import sonzai_bp
 from routes.sonzai_native import sonzai_native_bp
+from routes.ggreels_bp import ggreels_bp
 
 # NOTE: Blueprint short-drama LAMA (reelshort, melolo, goodshort, dramabox,
 # shortmax, dramanova) SUDAH DIHAPUS — sekarang dilayani oleh provider BUNDLED
@@ -65,6 +66,7 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(downloader_bp)
 app.register_blueprint(sonzai_bp)
 app.register_blueprint(sonzai_native_bp)
+app.register_blueprint(ggreels_bp)
 
 # ── Global Request Hook ─────────────────────────────────────────────
 @app.before_request

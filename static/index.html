@@ -1412,6 +1412,21 @@
               { name: 'ep', label: 'episode', value: '1' }
             ] }
         ]
+      },
+      {
+        id: 'ggreels', name: 'GGReels (Sub Indo)', color: '#e50914', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'home', path: '/ggreels/home', desc: 'Katalog Drama Sub Indo', fields: [] },
+          { id: 'detail', path: '/ggreels/detail', desc: 'Detail + Episodes', fields: [
+              { name: 'id', label: 'drama id', required: true, value: '06328656' }
+            ] },
+          { id: 'search', path: '/ggreels/search', desc: 'Cari Drama', fields: [
+              { name: 'q', label: 'keyword', required: true, value: 'naga' }
+            ] },
+          { id: 'download', path: '/ggreels/download', desc: 'Download/Stream MP4', isDownload: true, fields: [
+              { name: 'id', label: 'drama id', required: true, value: '06328656' }
+            ] }
+        ]
       }
     ];
 
