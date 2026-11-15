@@ -92,24 +92,41 @@ def _run(coro):
     return future.result(timeout=300)
 
 
+def _unwrap_proxy_url(url):
+    """Lepas bungusan proxy sonzaix. Pola: .../play.m3u8?url=<CDN asli>.
+    Kalau URL mengarah ke proxy & ada param 'url', balikin CDN asli (langsung)."""
+    if not url or "url=" not in url:
+        return url
+    from urllib.parse import urlparse, parse_qs
+    host = urlparse(url).netloc.lower()
+    if "sonzaix.codes" in host:
+        q = parse_qs(urlparse(url).query)
+        direct = q.get("url", [None])[0]
+        if direct:
+            return direct
+    return url
+
+
 def _extract_stream_url(res):
     """Normalisasi berbagai bentuk respons stream -> dict dgn 'url' + 'type'.
     Mendukung: url, video_url (reelshort), streams[].url (cashdrama),
-    video.mp4/hls (dramabox)."""
+    video.mp4/hls (dramabox). URL proxy sonzaix di-unwrap ke CDN langsung."""
     if not isinstance(res, dict):
         return res
     # sudah ada 'url' langsung
     if res.get("url"):
+        res = dict(res)
+        res["url"] = _unwrap_proxy_url(res["url"])
         return res
     # reelshort: video_url
     if res.get("video_url"):
-        return {"url": res["video_url"], "type": "hls", "source": "video_url", **res}
+        return {"url": _unwrap_proxy_url(res["video_url"]), "type": "hls", "source": "video_url", **res}
     # cashdrama: streams[] array
     streams = res.get("streams")
     if isinstance(streams, list) and streams:
         s0 = streams[0]
         if isinstance(s0, dict) and s0.get("url"):
-            return {"url": s0["url"], "type": "hls", "drm_token": res.get("drm_token"),
+            return {"url": _unwrap_proxy_url(s0["url"]), "type": "hls", "drm_token": res.get("drm_token"),
                     "quality": s0.get("quality"), "source": "streams", **res}
     # dramabox: video.mp4 / video.hls
     video = res.get("video")
@@ -117,7 +134,7 @@ def _extract_stream_url(res):
         u = video.get("mp4") or video.get("hls") or video.get("url")
         if u:
             typ = "mp4" if video.get("mp4") else "hls"
-            return {"url": u, "type": typ, "chapter": res.get("chapter"), "source": "video", **res}
+            return {"url": _unwrap_proxy_url(u), "type": typ, "chapter": res.get("chapter"), "source": "video", **res}
     return res
 
 
