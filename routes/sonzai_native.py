@@ -91,6 +91,35 @@ def _run(coro):
     return future.result(timeout=300)
 
 
+def _extract_stream_url(res):
+    """Normalisasi berbagai bentuk respons stream -> dict dgn 'url' + 'type'.
+    Mendukung: url, video_url (reelshort), streams[].url (cashdrama),
+    video.mp4/hls (dramabox)."""
+    if not isinstance(res, dict):
+        return res
+    # sudah ada 'url' langsung
+    if res.get("url"):
+        return res
+    # reelshort: video_url
+    if res.get("video_url"):
+        return {"url": res["video_url"], "type": "hls", "source": "video_url", **res}
+    # cashdrama: streams[] array
+    streams = res.get("streams")
+    if isinstance(streams, list) and streams:
+        s0 = streams[0]
+        if isinstance(s0, dict) and s0.get("url"):
+            return {"url": s0["url"], "type": "hls", "drm_token": res.get("drm_token"),
+                    "quality": s0.get("quality"), "source": "streams", **res}
+    # dramabox: video.mp4 / video.hls
+    video = res.get("video")
+    if isinstance(video, dict):
+        u = video.get("mp4") or video.get("hls") or video.get("url")
+        if u:
+            typ = "mp4" if video.get("mp4") else "hls"
+            return {"url": u, "type": typ, "chapter": res.get("chapter"), "source": "video", **res}
+    return res
+
+
 def _slim_items(res):
     """Normalisasi respons provider -> list item {id,title,cover}.
     Provider bisa balikin items di top-level ATAU di bawah 'data'."""
@@ -202,13 +231,26 @@ def stream(name):
         return json_response({"error": "id required"}, 400)
     params = {"id": did, "book_id": did, "drama_id": did, "vid": did,
               "ep": request.args.get("ep", 1), "episode": request.args.get("ep", 1),
+              "chapter_index": request.args.get("chapter_index", 0),
+              "chapter_id": request.args.get("chapter_id"),
               "quality": request.args.get("quality"),
               "lang": request.args.get("lang", DEFAULT_LANG.get(name, "id"))}
-    route_method = p.route("stream")
+    # urutan fallback: 'stream'/'play' (URL langsung) -> 'resolve_download'
+    # (URL video via resolve) -> 'episodes'/'chapter_info' (metadata, terakhir)
+    route_method = p.route("stream") or p.route("play")
     try:
-        res = _run(route_method(params))
+        if route_method is not None:
+            res = _run(route_method(params))
+        elif hasattr(p, "resolve_download"):
+            res = _run(p.resolve_download(params))
+        elif p.route("episodes") or p.route("chapter_info"):
+            res = _run((p.route("episodes") or p.route("chapter_info"))(params))
+        else:
+            return json_response({"error": f"{name}: tidak punya endpoint stream"}, 404)
     except Exception as e:
         return json_response({"error": f"{name}: {type(e).__name__}: {e}"}, 502)
+    # normalisasi: ekstrak url video dari berbagai bentuk respons
+    res = _extract_stream_url(res)
     return _wrap({"type": "stream", "data": res})
 
 
