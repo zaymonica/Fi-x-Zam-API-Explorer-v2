@@ -44,6 +44,34 @@ project-api/
     └── shortmax.py      # ShortMax
 ```
 
+## 🎬 7 Provider Native (Standalone)
+
+Blueprint `routes/sonzai_native.py` menyematkan **7 provider short drama** langsung ke Fi x Zam — **tanpa butuh proses Sonzai terpisah**. Semua provider embed class-nya + jalankan via event loop persisten.
+
+| Provider | Katalog | Endpoint |
+|---|---|---|
+| ReelShort | 31 | `/sonzai/reelshort/{home,search,detail,stream,download}` |
+| Melolo | 18 | `/sonzai/melolo/...` |
+| GoodShort | 17 | `/sonzai/goodshort/...` |
+| CashDrama | 20 | `/sonzai/cashdrama/...` |
+| DramaBox | 10 | `/sonzai/dramabox/...` |
+| ShortMax | 20 | `/sonzai/shortmax/...` |
+| RapidTV | 20 | `/sonzai/rapidtv/...` |
+
+Endpoint per provider:
+
+```bash
+GET /sonzai/<provider>/home                 # katalog
+GET /sonzai/<provider>/search?q=kata        # cari
+GET /sonzai/<provider>/detail?book_id=<id>  # detail + episode
+GET /sonzai/<provider>/stream?book_id=<id>&ep=1
+GET /sonzai/<provider>/download?book_id=<id>&ep=1   # unduh MP4 (remux HLS→MP4)
+```
+
+### Ketergantungan Provider Native
+
+Provider native **mengimpor class provider** dari codebase Sonzai (`app/providers/*.py`). Untuk jalan lokal, pastikan path `/home/ubuntu/aggregator` tersedia, atau sesuaikan `sys.path.insert(...)` di `routes/sonzai_native.py` mengarah ke folder yang punya `app/providers/`.
+
 ## 🚀 Cara Deploy di VPS
 
 ### 1. Setup Environment
@@ -58,7 +86,13 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Install ffmpeg (wajib untuk remux HLS→MP4 di provider native)
+sudo apt install -y ffmpeg
+# atau pakai static build: https://johnvansickle.com/ffmpeg/
 ```
+
+> ⚠️ **ffmpeg wajib** ada di `PATH` agar endpoint `download` provider native bisa remux HLS ke MP4.
 
 ### 2. Konfigurasi
 
