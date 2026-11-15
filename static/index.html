@@ -1514,6 +1514,42 @@
             ]
           }
         ]
+      },
+      {
+        id: 'cashdrama', name: 'CashDrama', color: '#10b981', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'home', path: '/sonzai/cashdrama/home', desc: 'Homepage', fields: [
+              { name: 'lang', label: 'lang', value: 'id' }
+            ] },
+          { id: 'detail', path: '/sonzai/cashdrama/detail', desc: 'Detail + Episodes', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '23264' }
+            ] },
+          { id: 'stream', path: '/sonzai/cashdrama/stream', desc: 'Stream', fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '23264' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/cashdrama/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'book_id', label: 'book_id', required: true, value: '23264' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
+        ]
+      },
+      {
+        id: 'rapidtv', name: 'RapidTV', color: '#f97316', badge: 'VIDEO', category: 'Short Drama API',
+        endpoints: [
+          { id: 'home', path: '/sonzai/rapidtv/home', desc: 'Homepage', fields: [] },
+          { id: 'detail', path: '/sonzai/rapidtv/detail', desc: 'Detail + Episodes', fields: [
+              { name: 'id', label: 'id', required: true, value: '2120062629762531329' }
+            ] },
+          { id: 'stream', path: '/sonzai/rapidtv/stream', desc: 'Stream', fields: [
+              { name: 'id', label: 'id', required: true, value: '2120062629762531329' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] },
+          { id: 'download', path: '/sonzai/rapidtv/download', desc: 'Download MP4', isDownload: true, fields: [
+              { name: 'id', label: 'id', required: true, value: '2120062629762531329' },
+              { name: 'ep', label: 'episode', value: '1' }
+            ] }
+        ]
       }
     ];
 

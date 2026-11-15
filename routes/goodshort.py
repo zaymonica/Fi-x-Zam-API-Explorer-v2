@@ -12,6 +12,7 @@ import requests as http_requests
 from flask import Blueprint, request
 
 from utils import json_response
+from config import API_AUTHOR, API_CONTACT
 
 goodshort_bp = Blueprint('goodshort', __name__)
 

@@ -46,6 +46,8 @@ from routes.moviebox import moviebox_bp
 from routes.pinedrama import pinedrama_bp
 from routes.admin import admin_bp, get_disabled_providers
 from routes.downloader import downloader_bp
+from routes.sonzai_bridge import sonzai_bp
+from routes.sonzai_native import sonzai_native_bp
 
 # ── Register Blueprints ─────────────────────────────────────────────
 app.register_blueprint(cors_bp)
@@ -70,6 +72,8 @@ app.register_blueprint(moviebox_bp)
 app.register_blueprint(pinedrama_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(downloader_bp)
+app.register_blueprint(sonzai_bp)
+app.register_blueprint(sonzai_native_bp)
 
 # ── Global Request Hook ─────────────────────────────────────────────
 @app.before_request
